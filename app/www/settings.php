@@ -36,6 +36,7 @@ if (isset($_POST['submit'])) {
 
 
     $setting->webip = $_POST['webip'];
+    $setting->server_name = $_POST['server_name'];
     $setting->logourl = $_POST['logourl'];
     $setting->hlsfolder = $_POST['hlsfolder'];
     mkdir($_POST['hlsfolder'], 0777);

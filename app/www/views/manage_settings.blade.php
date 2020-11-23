@@ -32,7 +32,14 @@
                             <input type="text" class="form-control col-md-7 col-xs-12"  name="ffprobe_path" value="{{  isset($_POST['ffprobe_path']) ?  $_POST['ffprobe_path'] : $setting->ffprobe_path}}">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Server name: 
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="form-control col-md-7 col-xs-12" name="server_name" value="{{  isset($_POST['server_name']) ?  $_POST['server_name'] : $setting->server_name}}">
+                        </div>
+                        <i class="fas fa-info-circle"></i> Your software administration name
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Custom IP/DNS: 
                         </label>
