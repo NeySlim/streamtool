@@ -84,4 +84,5 @@ echo $template->view()->make('streams')
     ->with('message', $message)
     ->with('title', $title)
     ->with('cronStatus', $cronStatus)
+    ->with('setting', Setting::first())
     ->render();

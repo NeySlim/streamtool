@@ -38,4 +38,5 @@ echo $template->view()->make('manage_useragentblock')
     ->with('useragentblock', $ipblock)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

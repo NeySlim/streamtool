@@ -37,4 +37,5 @@ echo $template->view()->make('manage_category')
     ->with('category', $category)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

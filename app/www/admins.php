@@ -24,4 +24,5 @@ $admins = Admin::all();
 echo $template->view()->make('admins')
     ->with('admins', $admins)
     ->with('message', $message)
+    ->with('setting', Setting::first())
     ->render();

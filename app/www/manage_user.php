@@ -78,4 +78,5 @@ echo $template->view()
     ->with('categories', $categories)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

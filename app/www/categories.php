@@ -19,4 +19,5 @@ $categories = Category::all();
 echo $template->view()->make('categories')
     ->with('categories', $categories)
     ->with('message', $message)
+    ->with('setting', Setting::first())
     ->render();

@@ -42,4 +42,5 @@ echo $template->view()->make('manage_ipblock')
     ->with('ipblock', $ipblock)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

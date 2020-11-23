@@ -27,5 +27,6 @@ $activity = Activity::where('date_end', '<>', '0000-00-00 00:00:00')->get();
 echo $template->view()->make('activities')
     ->with('activities', $activity)
     ->with('message', $message)
+    ->with('setting', Setting::first())
     ->render();
 ?>

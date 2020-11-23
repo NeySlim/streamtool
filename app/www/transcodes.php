@@ -9,4 +9,5 @@ if (isset($_GET['delete'])) {
 echo $template->view()->make('transcodes')
     ->with('transcodes', Transcode::all())
     ->with('message', $message)
+    ->with('setting', Setting::first())
     ->render();

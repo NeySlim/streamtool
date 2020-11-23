@@ -69,4 +69,5 @@ echo $template->view()->make('manage_transcode')
     ->with('categories', $categories)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

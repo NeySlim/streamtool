@@ -47,4 +47,5 @@ echo $template->view()->make('manage_admin')
     ->with('admin', $admin)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();

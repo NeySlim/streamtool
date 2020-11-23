@@ -77,4 +77,5 @@ echo $template->view()->make('stream_importer')
     ->with('transcodes', $transcodes)
     ->with('message', $message)
     ->with('title', $title)
+    ->with('setting', Setting::first())
     ->render();
