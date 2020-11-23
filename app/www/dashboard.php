@@ -72,5 +72,5 @@ echo $template->view()
     ->with('mem', $mem)
     ->with('gpupresent', $gpupresent)
     ->with('gpuinfos', $gpuinfos)
-    ->whih('setting', $settings)
+    ->with('setting', $settings)
     ->render();
