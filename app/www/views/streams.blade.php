@@ -2,9 +2,7 @@
 @section('content')
 
 <div class="">
-
     <div class="row">
-
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
@@ -32,8 +30,6 @@
                     </div>
                     @endif
                     <div class="">
-
-
                         <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
                             <thead>
                                 <tr class="headings">
@@ -49,39 +45,38 @@
                                     </th>
                                 </tr>
                             </thead>
-
                             <tbody>
-
-
                                 @foreach($streams as $key => $stream)
-
                                 <tr>
                                     <td class="center"><input type="checkbox" class="tableflat check" value="{{ $stream->id }}" name="mselect[]"></td>
                                     <td style="font-family: system-ui; font-weight: bold;">
                                         {{ strtoupper($stream->name) }}
-
+                                    </td>
+                                    <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label["text"] }}</span>
+                                        @if($stream->checker == 0)
+                                        <span class="label label-info"><i class="fas fa-check-circle"></i> Primary URL</span>
+                                        @endif
                                         @if($stream->checker == 2)
-                                        <span class="label label-info">streamurl2</span>
+                                        <span class="label label-info"><i class="fas fa-exclamation-circle"></i> >Backup URL 1</span>
                                         @endif
                                         @if($stream->checker == 3)
-                                        <span class="label label-info">streamurl3</span>
+                                        <span class="label label-info"><i class="fas fa-exclamation-circle"></i> Backup URL 2</span>
                                         @endif
                                     </td>
-                                    <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label["text"] }}</span></td>
                                     <td class="center"><a class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
                                     <td style="font-family: monospace;" class="center">
                                         <i class="fas fa-long-arrow-alt-down"></i>
-                                        <a class="label label-primary">
+                                        <a class="label label-default">
                                             <i class="fas fa-video"></i>
                                             @if($stream->video_codec_name)
-                                            {{ $stream->video_codec_name }}
+                                            {{ strtoupper($stream->video_codec_name) }}
                                             @else
                                             'N/A'
                                             @endif
                                             |
                                             <i class="fas fa-volume-up"></i>
                                             @if($stream->audio_codec_name)
-                                            {{ $stream->audio_codec_name }}
+                                            {{ strtoupper($stream->audio_codec_name) }}
                                             @else
                                             'N/A'
                                             @endif
@@ -89,38 +84,30 @@
                                     </td>
                                     <td class="center" style="font-family: monospace;">
                                         <i class="fas fa-long-arrow-alt-up"></i>
-                                        <a class="label label-warning">
+                                        <a class="label label-default">
                                             <i class="fas fa-video"></i>
                                             @if(($stream->transcode)->video_codec)
-                                            {{ ($stream->transcode)->video_codec }}
+                                            {{ strtoupper(($stream->transcode)->video_codec) }}
                                             @else
-                                            copy
+                                            COPY
                                             @endif
                                             |
                                             <i class="fas fa-volume-up"></i>
                                             @if(($stream->transcode)->audio_codec)
-                                            {{ ($stream->transcode)->audio_codec }}
+                                            {{ strtoupper(($stream->transcode)->audio_codec) }}
                                             @else
-                                            copy
+                                            COPY
                                             @endif
                                         </a>
                                     </td>
                                     <td class="center">
-                                        @if($stream->status == 1)
-                                        <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="far fa-stop-circle"></i></a>
+                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="fas fa-play"></i></a>
+                                        <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="fas fa-stop"></i></a>
                                         <a class="btn-warning btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-redo-alt"></i></a>
-                                        @elseif ($stream->status != 1)
-                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="far fa-play-circle"></i></a>
-                                        @endif
-
                                         <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i></a>
-                                        <a></a>
-                                        <a class="pull-right btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-times-circle"></i></a>
-
-
+                                        <a class="pull-right btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                     @endforeach
-
                             </tbody>
                         </table>
                         @else
@@ -134,7 +121,6 @@
         </div>
     </div>
     @endsection
-
     @section('js')
     <!-- Datatables -->
     <script src="js/datatables/js/jquery.dataTables.js"></script>
@@ -146,7 +132,6 @@
                 radioClass: 'iradio_flat-green'
             });
         });
-
         var asInitVals = new Array();
         $(document).ready(function() {
             var oTable = $('#example').dataTable({
@@ -181,8 +166,6 @@
                 }
             });
         });
-
-
         $('table input').on('ifChecked', function() {
             check_state = '';
             $(this).parent().parent().parent().addClass('selected');
@@ -193,7 +176,6 @@
             $(this).parent().parent().parent().removeClass('selected');
             countChecked();
         });
-
         var check_state = '';
         $('.bulk_action input').on('ifChecked', function() {
             check_state = '';
@@ -213,7 +195,6 @@
             check_state = 'uncheck_all';
             countChecked();
         });
-
         function countChecked() {
             if (check_state == 'check_all') {
                 $(".bulk_action input[name='mselect[]']").iCheck('check');
