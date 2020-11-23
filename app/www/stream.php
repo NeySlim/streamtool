@@ -17,7 +17,8 @@ $user_activity_id = 0;
 $user_ip = $_SERVER['REMOTE_ADDR'];
 header("Access-Control-Allow-Origin: *");
 register_shutdown_function('closed');
-header("application/vnd.apple.mpegurl");
+header("application/octet-stream");
+header('Content-Description: File Transfer');
 if (ob_get_length() > 0) {
     ob_end_flush();
 }
@@ -85,7 +86,7 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                             $folder = "/opt/streamtool/app/www/" . $setting->hlsfolder . '/';
                             $files = "";
                             $file = "/opt/streamtool/app/www/" . $setting->hlsfolder . '/' . $stream->id . '_.m3u8';
-                            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+                            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
                             header('Content-Length: ' . filesize($file));
                             header('Expires: 0');
                             header('Cache-Control: must-revalidate');
@@ -94,6 +95,7 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                                 readfile($file);
                                 exit();
                             }
+                        }
                     }
                 }
             }
