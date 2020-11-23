@@ -85,14 +85,15 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                             $folder = "/opt/streamtool/app/www/" . $setting->hlsfolder . '/';
                             $files = "";
                             $file = "/opt/streamtool/app/www/" . $setting->hlsfolder . '/' . $stream->id . '_.m3u8';
+                            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+                            header('Content-Length: ' . filesize($file));
+                            header('Expires: 0');
+                            header('Cache-Control: must-revalidate');
+                            header('Pragma: public');
                             if (file_exists($file) && preg_match_all("/(.*?).ts/", file_get_contents($file), $data)) {
-
-		                foreach (preg_split("/((\r?\n)|(\r\n?))/", file_get_contents($file)) as $line) {
-
-                                    echo $line . "\r\n";
-                                }
+                                readfile($file);
+                                exit();
                             }
-                        }
                     }
                 }
             }
