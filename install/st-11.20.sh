@@ -81,7 +81,9 @@ apt-get autoremove --allow-downgrades --allow-remove-essential --allow-unauthent
 PID=$!
 spinner $PID "Removing unnecessary packages"
 
-apt-get install --allow-downgrades --allow-remove-essential --allow-unauthenticated -y sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 ffmpeg libavcodec-extra58 libavfilter-extra7 >/dev/null 2>&1 &
+apt-get install --allow-downgrades --allow-remove-essential --allow-unauthenticated -y sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools >/dev/null 2>&1 &
+apt-get install --allow-downgrades --allow-remove-essential --allow-unauthenticated -y libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 >/dev/null 2>&1 &
+apt-get install --allow-downgrades --allow-remove-essential --allow-unauthenticated -y libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 ffmpeg libavcodec-extra58 libavfilter-extra7 >/dev/null 2>&1 &
 PID=$!
 spinner $PID "Installing ubuntu required packages"
 
