@@ -165,6 +165,7 @@ function getTranscode($id, $streamnumber = null)
 
 function getTranscodedata($id)
 {
+    $stream = Stream::find($id);
     $trans = Transcode::find($id);
     $setting = Setting::first();
     $ffmpeg = "ffmpeg";

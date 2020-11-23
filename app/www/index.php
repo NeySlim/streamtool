@@ -3,7 +3,7 @@ include('config.php');
 if (isset($_SESSION['user_id'])) {
     header("location: dashboard.php");
 }
-
+$setting = Setting::first();
 $error = '';
 if (isset($_POST['submit'])) {
     if (empty($_POST['username']) || empty($_POST['password'])) {
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Streamtool</title>
+    <title><?php echo $setting->server_name; ?></title>
     <link rel="icon" href="favicon.ico" />
     <!-- Bootstrap core CSS -->
 

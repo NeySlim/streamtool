@@ -86,6 +86,7 @@ if (isset($_GET['install'])) {
             $table->string('ffmpeg_nvcc_path')->default('/opt/streamtool/app/bin/ffmpeg-streamtool');
             $table->string('webport')->default('8000');
             $table->string('webip');
+            $table->string('server_name')->default('Streamtool');
             $table->string('logourl')->default('http://example.com/logo/');
             $table->string('hlsfolder')->default('/hls');
             $table->string('user_agent')->default('Streamtool/ST-20.11');
