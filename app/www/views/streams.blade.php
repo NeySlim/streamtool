@@ -57,7 +57,7 @@
 
                                 <tr>
                                     <td class="center"><input type="checkbox" class="tableflat check" value="{{ $stream->id }}" name="mselect[]"></td>
-                                    <td style="font-weight: bold;">
+                                    <td style="font-family: system-ui; font-weight: bold;">
                                         {{ strtoupper($stream->name) }}
 
                                         @if($stream->checker == 2)
@@ -69,16 +69,17 @@
                                     </td>
                                     <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label["text"] }}</span></td>
                                     <td class="center"><a class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
-                                    <td>v:
+                                    <td style="font-family: monospace;" class="center">
+                                        <i class="fas fa-long-arrow-alt-down"></i>
                                         <a class="label label-primary">
+                                            <i class="fas fa-video"></i>
                                             @if($stream->video_codec_name)
                                             {{ $stream->video_codec_name }}
                                             @else
                                             'N/A'
                                             @endif
-                                        </a>
-                                        <br />a:
-                                        <a class="label label-primary">
+                                            |
+                                            <i class="fas fa-volume-up"></i>
                                             @if($stream->audio_codec_name)
                                             {{ $stream->audio_codec_name }}
                                             @else
@@ -86,18 +87,17 @@
                                             @endif
                                         </a>
                                     </td>
-                                    <td class="center">
-                                        v:
+                                    <td class="center" style="font-family: monospace;">
+                                        <i class="fas fa-long-arrow-alt-up"></i>
                                         <a class="label label-warning">
+                                            <i class="fas fa-video"></i>
                                             @if(($stream->transcode)->video_codec)
                                             {{ ($stream->transcode)->video_codec }}
                                             @else
                                             copy
                                             @endif
-                                        </a>
-                                        <br />
-                                        a:
-                                        <a class="label label-warning">
+                                            |
+                                            <i class="fas fa-volume-up"></i>
                                             @if(($stream->transcode)->audio_codec)
                                             {{ ($stream->transcode)->audio_codec }}
                                             @else
@@ -105,18 +105,17 @@
                                             @endif
                                         </a>
                                     </td>
-
                                     <td class="center">
                                         @if($stream->status == 1)
-                                        <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="far fa-stop-circle"></i> Stop</a>
-                                        <a class="btn-success btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-sync-alt"></i> Restart</a>
+                                        <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="far fa-stop-circle"></i></a>
+                                        <a class="btn-warning btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-redo-alt"></i></a>
                                         @elseif ($stream->status != 1)
-                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="far fa-play-circle"></i>Start</a>
+                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="far fa-play-circle"></i></a>
                                         @endif
 
-                                        <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i> Edit</a>
-
-                                        <a class="btn-info btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-times-circle"></i> Remove</a>
+                                        <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i></a>
+                                        <a></a>
+                                        <a class="pull-right btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-times-circle"></i></a>
 
 
                                     </td>
