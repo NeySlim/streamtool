@@ -41,7 +41,7 @@
                                     <th>Category</th>
                                     <th>Input Codecs</th>
                                     <th>Output Encoders</th>
-                                    <th class=" no-link last"><span class="nobr">Action</span>
+                                    <th class=" no-link last"><span class="nobr">Control</span>
                                     </th>
                                 </tr>
                             </thead>
