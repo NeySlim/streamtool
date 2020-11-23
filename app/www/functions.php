@@ -114,7 +114,7 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg .= ' -hls_flags delete_segments -hls_time 10 -hls_delete_threshold 4';
     $endofffmpeg .= ' -hls_list_size 8 /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
     if ($trans) {
-        $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
+        $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_delay_max 2 -err_detect ignore_err';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
         $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
@@ -155,7 +155,7 @@ function getTranscode($id, $streamnumber = null)
         return $ffmpeg;
     }
 
-    $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
+    $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1  -reconnect_delay_max 2 -err_detect ignore_err';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
     $ffmpeg .= ' -i "' . $url . '"';
     $ffmpeg .= ' -c:v copy -c:a copy';
@@ -168,7 +168,7 @@ function getTranscodedata($id)
     $trans = Transcode::find($id);
     $setting = Setting::first();
     $ffmpeg = "ffmpeg";
-    $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
+    $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_delay_max 2 -err_detect ignore_err';
     $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
     $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
