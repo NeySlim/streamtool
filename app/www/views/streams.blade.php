@@ -70,32 +70,40 @@
                                     <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label["text"] }}</span></td>
                                     <td class="center"><a class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
                                     <td>v:
-					<a class="label label-primary">
-                                        @if($stream->video_codec_name)
-                                        {{ $stream->video_codec_name }}
-                                        @else
-                                        'N/A'
-                                        @endif
-					</a>
-					<br/>a:
-					<a class="label label-primary">
-                                        @if($stream->audio_codec_name)
-                                        {{ $stream->audio_codec_name }}
-                                        @else
-                                        'N/A'
-                                        @endif
-				        </a>
+                                        <a class="label label-primary">
+                                            @if($stream->video_codec_name)
+                                            {{ $stream->video_codec_name }}
+                                            @else
+                                            'N/A'
+                                            @endif
+                                        </a>
+                                        <br />a:
+                                        <a class="label label-primary">
+                                            @if($stream->audio_codec_name)
+                                            {{ $stream->audio_codec_name }}
+                                            @else
+                                            'N/A'
+                                            @endif
+                                        </a>
                                     </td>
-				     <td class="center">
-					v:
-					<a class="label label-warning">
-                                        {{ ($stream->transcode)->video_codec }}
-					</a>
-					<br/>
-					a:
-					<a class="label label-warning">
-					  {{ ($stream->transcode)->audio_codec }}
-					</a>
+                                    <td class="center">
+                                        v:
+                                        <a class="label label-warning">
+                                            @if(($stream->transcode)->video_codec)
+                                            {{ ($stream->transcode)->video_codec }}
+                                            @else
+                                            copy
+                                            @endif
+                                        </a>
+                                        <br />
+                                        a:
+                                        <a class="label label-warning">
+                                            @if(($stream->transcode)->audio_codec)
+                                            {{ ($stream->transcode)->audio_codec }}
+                                            @else
+                                            copy
+                                            @endif
+                                        </a>
                                     </td>
 
                                     <td class="center">
@@ -103,7 +111,7 @@
                                         <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="far fa-stop-circle"></i> Stop</a>
                                         <a class="btn-success btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-sync-alt"></i> Restart</a>
                                         @elseif ($stream->status != 1)
-                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="far fa-play-circle"></i >Start</a>
+                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="far fa-play-circle"></i>Start</a>
                                         @endif
 
                                         <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i> Edit</a>
