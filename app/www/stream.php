@@ -2,17 +2,6 @@
 error_reporting(E_ALL);
 set_time_limit(0);
 include("config.php");
-function closed()
-{
-    global $user_activity_id;
-    if ($user_activity_id != 0) {
-        $active = Activity::find($user_activity_id);
-        $active->date_end = date('Y-m-d H:i:s');
-        $active->save();
-    }
-    fastcgi_finish_request();
-    exit;
-}
 $user_activity_id = 0;
 $user_ip = $_SERVER['REMOTE_ADDR'];
 
@@ -39,36 +28,18 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                     $user_id = $user->id;
                     $user_max_connections = $user->max_connections;
                     $user_expire_date = $user->exp_date;
-                    $user_activity = $user->activity()->where('date_end', '=', '0000-00-00')->get();
-                    $active_cons = $user_activity->count();
+                    //$user_activity = $user->activity()->where('date_end', '=', '0000-00-00')->get();
+                    $active_cons = 1;
                     if ($user_max_connections != 1 && $active_cons >= $user_max_connections) {
                         $maxconntactionactivity = Activity::where("user_id", "=", $user_id)->where("user_ip", "=", $user_ip)->where("date_end", "=", '0000-00-00')->first();
-                        if ($maxconntactionactivity != null) {
-                            if ($maxconntactionactivity->count() > 0) {
-                                --$active_cons;
-                            }
+                        //if ($maxconntactionactivity != null) {
+                        //    if ($maxconntactionactivity->count() > 0) {
+                        //        --$active_cons;
+                        //    }
                         }
                     }
                     if ($user_max_connections == 0 || $active_cons < $user_max_connections) {
                         if ($stream = Stream::find($_GET['stream'])) {
-                            if ($user_activity_id != 0) {
-                                $active = Activity::find($user_activity_id);
-                            } else {
-                                $active = new Activity();
-                            }
-                            $active->user_id = $user->id;
-                            $active->stream_id = $stream->id;
-                            $active->user_agent = $user_agent;
-                            $active->user_ip = $user_ip;
-                            $active->pid = getmypid();
-                            $active->bandwidth = 0;
-                            $active->date_start = date('Y-m-d H:i:s');
-                            $active->save();
-                            $user_activity_id = $active->id;
-                            $user->lastconnected_ip = $_SERVER['REMOTE_ADDR'];
-                            $user->last_stream = $stream->id;
-                            $user->useragent = $user_agent;
-                            $user->save();
                             $setting = Setting::first();
                             if ($stream->checker == 2) {
                                 $url = $stream->streamurl2;
@@ -84,5 +55,4 @@ if (isset($_GET['username']) && isset($_GET['password']) && isset($_GET['stream'
                 }
             }
         }
-    }
 
