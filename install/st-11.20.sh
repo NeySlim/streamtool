@@ -14,7 +14,7 @@ spinner() {
   echo -en " - $text\n"
 }
 
-archiveUrl="https://m.pew.pet8487/streamtool.tar.bz2"
+PAYLOAD_LINE=`awk '/^__BINARY_DATA__/ {print NR + 1; exit 0; }' $0`
 
 if [ -f /etc/lsb-release ]; then
   . /etc/lsb-release
@@ -93,10 +93,12 @@ echo ""
 echo ""
 echo "Installing Streamtool"
 
-git clone https://github.com/NeySlim/streamtool >/dev/null 2>&1 &
- 
+#git clone https://github.com/NeySlim/streamtool >/dev/null 2>&1 &
+
+tail -n+$PAYLOAD_LINE $0 | tar jxvf  -C /opt/. >/dev/null 2>&1 &
+
 PID=$!
-spinner $PID "Downloading software"
+spinner $PID "Extracting software"
 
 echo " - Configuring system"
 
@@ -210,3 +212,7 @@ spinner $PID "Starting Streamtool Webserver"
 sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php > /dev/null &
 echo ""
 echo -e "**************************************************\n*                                                *\n*          Streamtool install complete           *\n*                                                *\n*          http://$(hostname -I | cut -d ' ' -f1):9001\n*       Username: admin  Password: admin         *\n*                                                *\n**************************************************"
+
+exit 0
+
+__BINARY_DATA__
