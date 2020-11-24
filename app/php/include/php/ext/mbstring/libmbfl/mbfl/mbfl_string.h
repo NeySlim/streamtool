@@ -31,7 +31,6 @@
 #ifndef MBFL_STRING_H
 #define MBFL_STRING_H
 
-#include <stddef.h>
 #include "mbfl_defs.h"
 #include "mbfl_encoding.h"
 #include "mbfl_language.h"
@@ -41,13 +40,13 @@
  */
 typedef struct _mbfl_string {
 	enum mbfl_no_language no_language;
-	const mbfl_encoding *encoding;
+	enum mbfl_no_encoding no_encoding;
 	unsigned char *val;
-	size_t len;
+	unsigned int len;
 } mbfl_string;
 
 MBFLAPI extern void mbfl_string_init(mbfl_string *string);
-MBFLAPI extern void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, const mbfl_encoding *encoding);
+MBFLAPI extern void mbfl_string_init_set(mbfl_string *string, mbfl_language_id no_language, mbfl_encoding_id no_encoding);
 MBFLAPI extern void mbfl_string_clear(mbfl_string *string);
 
 #ifndef NULL

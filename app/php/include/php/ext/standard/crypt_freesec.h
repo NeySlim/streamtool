@@ -1,3 +1,5 @@
+/* $Id$ */
+
 #ifndef _CRYPT_FREESEC_H
 #define _CRYPT_FREESEC_H
 
@@ -28,7 +30,7 @@ struct php_crypt_extended_data {
 
 void _crypt_extended_init(void);
 
-char *_crypt_extended_r(const unsigned char *key, const char *setting,
+char *_crypt_extended_r(const char *key, const char *setting,
 	struct php_crypt_extended_data *data);
 
 #endif

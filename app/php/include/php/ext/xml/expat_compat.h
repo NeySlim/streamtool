@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 7                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1997-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -15,6 +15,8 @@
    | Authors: Sterling Hughes <sterling@php.net>                          |
    +----------------------------------------------------------------------+
 */
+
+/* $Id$ */
 
 #ifndef PHP_EXPAT_COMPAT_H
 #define PHP_EXPAT_COMPAT_H
@@ -157,3 +159,10 @@ PHP_XML_API void XML_ParserFree(XML_Parser);
 #endif /* HAVE_LIBEXPAT */
 
 #endif /* PHP_EXPAT_COMPAT_H */
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */

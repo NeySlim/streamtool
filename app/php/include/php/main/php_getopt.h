@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 7                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1997-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -15,6 +15,8 @@
    | Author: Marcus Boerger <helly@php.net>                               |
    +----------------------------------------------------------------------+
 */
+
+/* $Id$ */
 
 #ifndef PHP_GETOPT_H
 #define PHP_GETOPT_H
@@ -35,7 +37,13 @@ extern PHPAPI int php_optidx;
 PHPAPI int php_getopt(int argc, char* const *argv, const opt_struct opts[], char **optarg, int *optind, int show_err, int arg_start);
 END_EXTERN_C()
 
-/* php_getopt will return this value if there is an error in arguments */
-#define PHP_GETOPT_INVALID_ARG (-2)
-
 #endif
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: noet sw=4 ts=4 fdm=marker
+ * vim<600: noet sw=4 ts=4
+ */

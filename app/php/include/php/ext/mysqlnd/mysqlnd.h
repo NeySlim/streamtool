@@ -2,7 +2,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 7                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) The PHP Group                                          |
+  | Copyright (c) 2006-2018 The PHP Group                                |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -21,8 +21,8 @@
 #ifndef MYSQLND_H
 #define MYSQLND_H
 
-#define PHP_MYSQLND_VERSION "mysqlnd " PHP_VERSION
-#define MYSQLND_VERSION_ID PHP_VERSION_ID
+#define PHP_MYSQLND_VERSION "mysqlnd 5.0.12-dev - 20150407 - $Id: 3591daad22de08524295e1bd073aceeff11e6579 $"
+#define MYSQLND_VERSION_ID 50012
 
 #define MYSQLND_PLUGIN_API_VERSION 2
 
@@ -48,7 +48,7 @@
 #define MYSQLND_DBG_ENABLED 0
 #endif
 
-#if defined(MYSQLND_COMPRESSION_WANTED)
+#if defined(MYSQLND_COMPRESSION_WANTED) && defined(HAVE_ZLIB)
 #define MYSQLND_COMPRESSION_ENABLED 1
 #endif
 
@@ -78,7 +78,7 @@ PHPAPI void mysqlnd_plugin_apply_with_argument(apply_func_arg_t apply_func, void
 PHPAPI void mysqlnd_minfo_print_hash(zval *values);
 #define mysqlnd_thread_safe()	TRUE
 
-PHPAPI const MYSQLND_CHARSET * mysqlnd_find_charset_nr(const unsigned int charsetno);
+PHPAPI const MYSQLND_CHARSET * mysqlnd_find_charset_nr(unsigned int charsetno);
 PHPAPI const MYSQLND_CHARSET * mysqlnd_find_charset_name(const char * const charsetname);
 
 
@@ -162,7 +162,7 @@ PHPAPI enum_func_status mysqlnd_poll(MYSQLND **r_array, MYSQLND **e_array, MYSQL
 
 /* mysqlnd metadata */
 PHPAPI const char *	mysqlnd_get_client_info();
-PHPAPI unsigned long mysqlnd_get_client_version();
+PHPAPI unsigned int	mysqlnd_get_client_version();
 
 #define mysqlnd_ssl_set(conn, key, cert, ca, capath, cipher) ((conn)->data)->m->ssl_set((conn)->data, (key), (cert), (ca), (capath), (cipher))
 
@@ -338,3 +338,13 @@ ZEND_TSRMLS_CACHE_EXTERN()
 PHPAPI void mysqlnd_minfo_print_hash(zval *values);
 
 #endif	/* MYSQLND_H */
+
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: noet sw=4 ts=4 fdm=marker
+ * vim<600: noet sw=4 ts=4
+ */

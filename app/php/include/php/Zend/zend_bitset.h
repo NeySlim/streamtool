@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | Zend OPcache JIT                                                     |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1998-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -12,9 +12,11 @@
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
    +----------------------------------------------------------------------+
-   | Authors: Dmitry Stogov <dmitry@php.net>                              |
+   | Authors: Dmitry Stogov <dmitry@zend.com>                             |
    +----------------------------------------------------------------------+
 */
+
+/* $Id:$ */
 
 #ifndef _ZEND_BITSET_H_
 #define _ZEND_BITSET_H_
@@ -84,7 +86,7 @@ static inline uint32_t zend_bitset_len(uint32_t n)
 
 static inline zend_bool zend_bitset_in(zend_bitset set, uint32_t n)
 {
-	return ZEND_BIT_TEST(set, n);
+	return (set[ZEND_BITSET_ELM_NUM(n)] & (Z_UL(1) << ZEND_BITSET_BIT_NUM(n))) != Z_UL(0);
 }
 
 static inline void zend_bitset_incl(zend_bitset set, uint32_t n)
@@ -252,3 +254,13 @@ static inline int zend_bitset_pop_first(zend_bitset set, uint32_t len) {
 }
 
 #endif /* _ZEND_BITSET_H_ */
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * indent-tabs-mode: t
+ * End:
+ * vim600: sw=4 ts=4 fdm=marker
+ * vim<600: sw=4 ts=4
+ */

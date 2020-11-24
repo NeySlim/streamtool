@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 7                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1997-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -14,9 +14,11 @@
    +----------------------------------------------------------------------+
    | Authors: Brian Schaffner <brian@tool.net>                            |
    |          Shane Caraveo <shane@caraveo.com>                           |
-   |          Zeev Suraski <zeev@php.net>                                 |
+   |          Zeev Suraski <zeev@zend.com>                                |
    +----------------------------------------------------------------------+
 */
+
+/* $Id$ */
 
 #ifndef DL_H
 #define DL_H

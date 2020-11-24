@@ -2,7 +2,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 7                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) The PHP Group                                          |
+  | Copyright (c) 2006-2018 The PHP Group                                |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -31,7 +31,7 @@
 
 /*
  * Convert from a 4-byte float to a 8-byte decimal by first converting
- * the float to a string (ignoring localization), and then the string to a double.
+ * the float to a string, and then the string to a double.
  * The decimals argument specifies the precision of the output. If decimals
  * is less than zero, then a gcvt(3) like logic is used with the significant
  * digits set to FLT_DIG i.e. 6.
@@ -42,10 +42,19 @@ static inline double mysql_float_to_double(float fp4, int decimals) {
 	if (decimals < 0) {
 		php_gcvt(fp4, FLT_DIG, '.', 'e', num_buf);
 	} else {
-		snprintf(num_buf, MAX_CHAR_BUF_LEN, "%.*F", decimals, fp4);
+		php_sprintf(num_buf, "%.*f", decimals, fp4);
 	}
 
 	return zend_strtod(num_buf, NULL);
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: noet sw=4 ts=4 fdm=marker
+ * vim<600: noet sw=4 ts=4
+ */
 
 #endif /* MYSQL_FLOAT_TO_DOUBLE_H */

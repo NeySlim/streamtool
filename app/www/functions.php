@@ -92,7 +92,6 @@ function stop_stream($id)
     $stream->status = 0;
 
     $stream->save();
-    sleep(2);
 }
 
 
@@ -112,7 +111,7 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg = "";
     $endofffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
     $endofffmpeg .= ' -hls_flags delete_segments -hls_time 4 -hls_list_size 8 -hls_allow_cache 1 -hls_delete_threshold 10 -hls_segment_type mpegts';
-    $endofffmpeg .= ' -hls_segment_filename /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%03d.ts  /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8  > /dev/null 2>/dev/null & echo $! ';
+    $endofffmpeg .= ' -hls_segment_filename /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%03d.ts  /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 ';
     if ($trans) {
         $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
@@ -224,7 +223,10 @@ function start_stream($id)
         $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
         $streaminfo = json_decode($checkstreamurl, true);
         if ($streaminfo) {
-            $pid = shell_exec(getTranscode($stream->id));
+//            $pid = shell_exec(getTranscode($stream->id));
+
+	     $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
+
             $stream->pid = $pid;
             $stream->running = 1;
             $stream->status = 1;
@@ -257,7 +259,8 @@ function start_stream($id)
                 $streaminfo = json_decode($checkstreamurl, true);
 
                 if ($streaminfo) {
-                    $pid = shell_exec(getTranscode($stream->id, 2));
+		     $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 2) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
+//                    $pid = shell_exec(getTranscode($stream->id, 2));
                     $stream->pid = $pid;
                     $stream->running = 1;
                     $stream->status = 1;
@@ -287,7 +290,8 @@ function start_stream($id)
                         $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                         $streaminfo = json_decode($checkstreamurl, true);
                         if ($streaminfo) {
-                            $pid = shell_exec(getTranscode($stream->id, 3));
+                //            $pid = shell_exec(getTranscode($stream->id, 3));
+			     $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 3) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
 
                             $stream->pid = $pid;
                             $stream->running = 1;

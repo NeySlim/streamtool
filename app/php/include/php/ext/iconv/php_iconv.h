@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 7                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1997-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -16,6 +16,8 @@
    |          Stig Bakken <ssb@php.net>                                   |
    +----------------------------------------------------------------------+
  */
+
+/* $Id: 88766408cdeacfcbba56e228a175f2ee616642c9 $ */
 
 #ifndef PHP_ICONV_H
 #define PHP_ICONV_H
@@ -116,3 +118,10 @@ PHP_ICONV_API php_iconv_err_t php_iconv_string(const char * in_p, size_t in_len,
 #define phpext_iconv_ptr iconv_module_ptr
 
 #endif	/* PHP_ICONV_H */
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */

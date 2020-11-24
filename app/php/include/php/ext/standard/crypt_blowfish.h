@@ -1,3 +1,4 @@
+/* $Id$ */
 /*
  * Written by Solar Designer <solar at openwall.com> in 2000-2011.
  * No copyright is claimed, and the software is hereby placed in the public

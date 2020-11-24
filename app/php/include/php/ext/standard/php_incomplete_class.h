@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 7                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) The PHP Group                                          |
+   | Copyright (c) 1997-2018 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -15,6 +15,8 @@
    | Author:  Sascha Schumann <sascha@schumann.cx>                        |
    +----------------------------------------------------------------------+
 */
+
+/* $Id$ */
 
 #ifndef PHP_INCOMPLETE_CLASS_H
 #define PHP_INCOMPLETE_CLASS_H
@@ -37,7 +39,7 @@
 	}
 
 #define PHP_CLEANUP_CLASS_ATTRIBUTES()	\
-	zend_string_release_ex(class_name, 0)
+	zend_string_release(class_name)
 
 #define PHP_CLASS_ATTRIBUTES											\
 	zend_string *class_name;											\

@@ -4,23 +4,21 @@ SED="/usr/bin/sed"
 prefix="/opt/streamtool/app/php"
 datarootdir="/opt/streamtool/app/php/php"
 exec_prefix="${prefix}"
-version="7.4.12"
-vernum="70412"
+version="7.2.34"
+vernum="70234"
 include_dir="${prefix}/include/php"
 includes="-I$include_dir -I$include_dir/main -I$include_dir/TSRM -I$include_dir/Zend -I$include_dir/ext -I$include_dir/ext/date/lib"
 ldflags=""
-libs="-lcrypt   -ltidy -lresolv -lcrypt -lrt -lstdc++ -lbz2 -lrt -lm -ldl  -lxml2 -lssl -lcrypto -lsqlite3 -lz -lcurl -lxml2 -lssl -lcrypto -licuio -licui18n -licuuc -licudata -lonig -lsqlite3 -lxml2 -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lxml2 -lz -lssl -lcrypto -lcrypt "
-extension_dir='/opt/streamtool/app/php/lib/php/extensions/no-debug-non-zts-20190902'
+libs="-lcrypt   -lz -ltidy -lresolv -lcrypt -lrt -lstdc++ -lpng -lz -ljpeg -lbz2 -lz -lrt -lm -ldl -lnsl  -lxml2 -lssl -lcrypto -lcurl -lxml2 -lssl -lcrypto -licuio -licui18n -licuuc -licudata -lxml2 -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lxml2 -lssl -lcrypto -lcrypt "
+extension_dir='/opt/streamtool/app/php/lib/php/extensions/no-debug-non-zts-20170718'
 man_dir=`eval echo ${datarootdir}/man`
 program_prefix=""
 program_suffix=""
 exe_extension=""
 php_cli_binary=NONE
 php_cgi_binary=NONE
-configure_options=" '--prefix=/opt/streamtool/app/php' '--config-cache' '--disable-cgi' '--enable-static=' '--enable-shared=' '--with-tsrm-pthreads' '--disable-phpdbg' '--with-msgpack' '--with-zlib-dir' '--with-freetype-dir' '--enable-mbstring' '--with-libxml-dir=/usr' '--enable-soap' '--enable-calendar' '--with-mcrypt' '--with-gd' '--without-pgsql' '--disable-rpath' '--enable-inline-optimization' '--with-bz2' '--with-zlib' '--enable-sockets' '--enable-sysvsem' '--enable-sysvshm' '--enable-sysvmsg' '--enable-pcntl' '--enable-mbregex' '--enable-exif' '--enable-bcmath' '--with-mhash' '--enable-zip' '--with-pcre-regex' '--with-pdo-mysql' '--without-pdo-pgsql' '--with-mysqli' '--enable-embedded-mysqli' '--with-mysql-sock=/var/run/mysqld/mysqld.sock' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-openssl' '--with-fpm-user=streamtool' '--with-fpm-group=streamtool' '--with-libdir=/lib/x86_64-linux-gnu' '--enable-ftp' '--without-kerberos' '--without-imap' '--without-imap-ssl' '--enable-intl' '--with-pcre-jit' '--enable-apc' '--enable-apcu' '--with-curl' '--with-imagick' '--enable-memcached' '--enable-memcached-protocol' '--enable-memcached-msgpack' '--with-tidy' '--enable-shmop' '--with-gettext' '--with-xmlrpc' '--without-xsl' '--enable-opcache' '--enable-fpm'"
+configure_options=" '--prefix=/opt/streamtool/app/php' '--config-cache' '--disable-cgi' '--enable-static=' '--enable-shared=' '--with-tsrm-pthreads' '--disable-phpdbg' '--with-msgpack' '--with-zlib-dir' '--with-freetype-dir' '--enable-mbstring' '--with-libxml-dir=/usr' '--enable-soap' '--enable-calendar' '--with-mcrypt' '--with-gd' '--without-pgsql' '--disable-rpath' '--enable-inline-optimization' '--with-bz2' '--with-zlib' '--enable-sockets' '--enable-sysvsem' '--enable-sysvshm' '--enable-sysvmsg' '--enable-pcntl' '--enable-mbregex' '--enable-exif' '--enable-bcmath' '--with-mhash' '--enable-zip' '--with-pcre-regex' '--with-pdo-mysql' '--without-pdo-pgsql' '--with-mysqli' '--enable-embedded-mysqli' '--with-mysql-sock=/var/run/mysqld/mysqld.sock' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-openssl' '--with-fpm-user=streamtool' '--with-fpm-group=streamtool' '--with-libdir=/lib/x86_64-linux-gnu' '--enable-ftp' '--without-kerberos' '--without-imap' '--without-imap-ssl' '--enable-intl' '--with-pcre-jit' '--enable-apc' '--enable-apcu' '--with-curl' '--with-imagick' '--enable-memcached' '--enable-memcached-protocol' '--enable-memcached-msgpack' '--with-tidy' '--enable-shmop' '--with-gettext' '--with-xmlrpc' '--without-xsl' '--enable-opcache' '--enable-fpm' '--with-freetype-dir=no'"
 php_sapis=" cli fpm"
-ini_dir=""
-ini_path="/opt/streamtool/app/php/lib"
 
 # Set php_cli_binary and php_cgi_binary if available
 for sapi in $php_sapis; do
@@ -65,10 +63,6 @@ case "$1" in
   echo $configure_options;;
 --man-dir)
   echo $man_dir;;
---ini-path)
-  echo $ini_path;;
---ini-dir)
-  echo $ini_dir;;
 --version)
   echo $version;;
 --vernum)
@@ -86,8 +80,6 @@ Options:
   --man-dir           [$man_dir]
   --php-binary        [$php_binary]
   --php-sapis         [$php_sapis]
-  --ini-path          [$ini_path]
-  --ini-dir           [$ini_dir]
   --configure-options [$configure_options]
   --version           [$version]
   --vernum            [$vernum]
