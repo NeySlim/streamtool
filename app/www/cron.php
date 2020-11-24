@@ -89,5 +89,5 @@ while (TRUE) {
         }
         $stream->save();
     }
-    usleep(100000);
+    sleep(10);
 }
