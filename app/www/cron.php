@@ -8,18 +8,32 @@ include('config.php');
 
 while (TRUE) {
     $setting = Setting::first();
-    !$setting->enableCheck  ? exit(0) :'';
+    !$setting->enableCheck  ? exit(0) : '';
     foreach (Stream::where('pid', '!=', 0)->where('running', '=', 1)->where('checkable', '=', 1)->get() as $stream) {
         if (!checkPid($stream->pid)) {
             $stream->checker = 0;
             $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
-            $streaminfo = (array)json_decode($checkstreamurl);
+            $streaminfo = json_decode($checkstreamurl, true);
             if (count($streaminfo) > 0) {
-		$pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
+                $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id), "/opt/streamtool/app/www/" . $setting->hlsfolder . "/" . $stream->id . "_.log"));
                 //$pid = shell_exec(getTranscode($stream->id));
                 $stream->pid = $pid;
                 $stream->running = 1;
                 $stream->status = 1;
+                $video = "";
+                $audio = "";
+                if (is_array($streaminfo)) {
+                    foreach ($streaminfo['streams'] as $info) {
+                        if ($video == '') {
+                            $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
+                        }
+                        if ($audio == '') {
+                            $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
+                        }
+                    }
+                    $stream->video_codec_name = $video;
+                    $stream->audio_codec_name = $audio;
+                }
             } else {
                 $stream->running = 1;
                 $stream->status = 2;
@@ -30,14 +44,28 @@ while (TRUE) {
                     $stream->checker = 2;
                     echo "checking stream 2";
                     $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl2 . '" -v  quiet -print_format json -show_streams 2>&1');
-                    $streaminfo = (array)json_decode($checkstreamurl);
+                    $streaminfo = json_decode($checkstreamurl, true);
                     if (count($streaminfo) > 0) {
                         echo getTranscode($stream->id, 2);
-	                  $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 2) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
-      			//$pid = shell_exec(getTranscode($stream->id, 2));
+                        $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 2), "/opt/streamtool/app/www/" . $setting->hlsfolder . "/" . $stream->id . "_.log"));
+                        //$pid = shell_exec(getTranscode($stream->id, 2));
                         $stream->pid = $pid;
                         $stream->running = 1;
                         $stream->status = 1;
+                        $video = "";
+                        $audio = "";
+                        if (is_array($streaminfo)) {
+                            foreach ($streaminfo['streams'] as $info) {
+                                if ($video == '') {
+                                    $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
+                                }
+                                if ($audio == '') {
+                                    $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
+                                }
+                            }
+                            $stream->video_codec_name = $video;
+                            $stream->audio_codec_name = $audio;
+                        }
                     } else {
                         $stream->running = 1;
                         $stream->status = 2;
@@ -46,13 +74,27 @@ while (TRUE) {
                         if ($stream->streamurl3) {
                             $stream->checker = 3;
                             $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl3 . '" -v  quiet -print_format json -show_streams 2>&1');
-                            $streaminfo = (array)json_decode($checkstreamurl);
+                            $streaminfo = json_decode($checkstreamurl, true);
                             if (count($streaminfo) > 0) {
-				$pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 3) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
+                                $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 3), "/opt/streamtool/app/www/" . $setting->hlsfolder . "/" . $stream->id . "_.log"));
                                 //$pid = shell_exec(getTranscode($stream->id, 3));
                                 $stream->pid = $pid;
                                 $stream->running = 1;
                                 $stream->status = 1;
+                                $video = "";
+                                $audio = "";
+                                if (is_array($streaminfo)) {
+                                    foreach ($streaminfo['streams'] as $info) {
+                                        if ($video == '') {
+                                            $video = ($info['codec_type'] == 'video' ? $info['codec_name'] : '');
+                                        }
+                                        if ($audio == '') {
+                                            $audio = ($info['codec_type'] == 'audio' ? $info['codec_name'] : '');
+                                        }
+                                    }
+                                    $stream->video_codec_name = $video;
+                                    $stream->audio_codec_name = $audio;
+                                }
                             } else {
                                 $stream->running = 1;
                                 $stream->status = 2;
@@ -67,19 +109,19 @@ while (TRUE) {
     foreach (Stream::where('restream', '=', 1)->where('running', '=', 1)->where('checkable', '=', 1)->get() as $stream) {
         $stream->checker = 0;
         $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
-        $streaminfo = (array)json_decode($checkstreamurl);
+        $streaminfo = json_decode($checkstreamurl, true);
         if (count($streaminfo) > 0) {
             $stream->checker = 0;
         } else {
             if ($stream->streamurl2) {
                 $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl2 . '" -v  quiet -print_format json -show_streams 2>&1');
-                $streaminfo = (array)json_decode($checkstreamurl);
+                $streaminfo = json_decode($checkstreamurl, true);
                 if (count($streaminfo) > 0) {
                     $stream->checker = 2;
                 } else { // fail 2
                     if ($stream->streamurl3) {
                         $checkstreamurl = shell_exec('/usr/bin/timeout 4s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "' . $stream->streamurl3 . '" -v  quiet -print_format json -show_streams 2>&1');
-                        $streaminfo = (array)json_decode($checkstreamurl);
+                        $streaminfo = json_decode($checkstreamurl, true);
                         if (count($streaminfo) > 0) {
                             $stream->checker = 3;
                         }
