@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
         } else {
 
             $error = "Username or Password is invalid";
-
         }
     }
 }
@@ -66,51 +65,51 @@ if (isset($_POST['submit'])) {
 
 <body style="background:#F7F7F7;">
 
-<div class="">
-    <a class="hiddenanchor" id="toregister"></a>
-    <a class="hiddenanchor" id="tologin"></a>
+    <div class="">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
 
-    <div id="wrapper">
-        <div id="login" class="animate form">
-            <?php
-            if ($error != "") {
-                echo "<div class=\"alert alert-error\">
+        <div id="wrapper">
+            <div id="login" class="animate form">
+                <?php
+                if ($error != "") {
+                    echo "<div class=\"alert alert-error\">
                                     " . $error . "
                                 </div>";
-            }
-            ?>
-            <section class="login_content">
-                <form action="" method="post">
-                    <h1>Streamtool</h1>
-                    <div>
-                        <input type="text" name="username" class="form-control" placeholder="Username" required=""/>
-                    </div>
-                    <div>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required=""/>
-                    </div>
-                    <div>
-                        <input type="submit" name="submit" class="btn btn-default submit" value="Log in">
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="separator">
-
-
-                        <div class="clearfix"></div>
-                        <br/>
+                }
+                ?>
+                <section class="login_content">
+                    <img src="img/streamtool.png"></img>
+                    <form action="" method="post">
+                        <h1><?php echo $setting->server_name; ?></h1>
                         <div>
-
-
-                            <p>&copy;2020 Streamtool - <a href="https://github.com/NeySlim/streamtool"
-                                                                                  target="_blank">NeySlim</a></p>
+                            <input type="text" name="username" class="form-control" placeholder="Username" required="" />
                         </div>
-                    </div>
-                </form>
-                <!-- form -->
-            </section>
-            <!-- content -->
+                        <div>
+                            <input type="password" name="password" class="form-control" placeholder="Password" required="" />
+                        </div>
+                        <div>
+                            <input type="submit" name="submit" class="btn btn-default submit" value="Log in">
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+
+
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+
+
+                                <p>&copy;2020 Streamtool - <a href="https://github.com/NeySlim/streamtool" target="_blank">NeySlim</a></p>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- form -->
+                </section>
+                <!-- content -->
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 
