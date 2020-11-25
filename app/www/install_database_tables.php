@@ -287,6 +287,8 @@ if (isset($_GET['update'])) {
         $db->schema()->hasColumn('streams', 'duration') ? '' : $table->BigInteger('duration')->default(0);
         
     });
-
+    $db->schema()->table('settings', function ($table) use ($db) {
+        $db->schema()->hasColumn('settings', 'server_name') ? '' : $table->string('server_name')->default('Streamtool');
+    });
     echo "update <br>" . PHP_EOL;
 }
