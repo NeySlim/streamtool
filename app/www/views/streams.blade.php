@@ -53,7 +53,7 @@
                                     <td style="font-family: system-ui; font-weight: bold;">
                                         {{ strtoupper($stream->name) }}
                                     </td>
-                                    <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label["text"] }}</span>
+                                    <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label['text'] }}</span>
                                         @if($stream->checker == 0)
                                         <span class="label label-info"><i class="fas fa-check-circle"></i> Primary URL</span>
                                         @endif
@@ -103,7 +103,11 @@
                                     </td>
                                     <td class="center">
                                         @if($stream->duration > 0)
+                                        @if($stream->status_label["text"] == "RUNNING")
                                         <span style="color: DarkGreen;"><i class="fas fa-circle-notch fa-spin"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
+                                        @else
+                                        <span style="color: DarkRed;"><i class="fas fa-exclamation-circle"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
+                                        @endif
                                         @else
                                         <span style="color: DarkSlateGray;"><i class="fas fa-stop"></i></i></span>
                                         @endif
