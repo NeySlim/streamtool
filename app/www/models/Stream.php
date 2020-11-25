@@ -21,7 +21,7 @@ class Stream extends Streamtool {
         if ($this->status == '1') {
             $return['label'] = 'success';
             $return['text'] = 'RUNNING';
-            $return['icon'] = 'fas fa-circle-notch fa-spin';
+            $return['icon'] = 'fas fa-play-circle';
         } else if ($this->status == '2') {
             $return['label'] = 'danger';
             $return['text'] = 'ERROR';

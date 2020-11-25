@@ -41,6 +41,7 @@
                                     <th>Category</th>
                                     <th>Input Codecs</th>
                                     <th>Output Encoders</th>
+                                    <th>Uptime</th>
                                     <th class=" no-link last"><span class="nobr">Control</span>
                                     </th>
                                 </tr>
@@ -65,7 +66,7 @@
                                     </td>
                                     <td class="center"><a class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
                                     <td style="font-family: monospace;" class="center">
-                                        <i class="fas fa-long-arrow-alt-down"></i>
+
                                         <a class="label label-default">
                                             <i class="fas fa-video"></i>
                                             @if($stream->video_codec_name)
@@ -73,7 +74,7 @@
                                             @else
                                             'N/A'
                                             @endif
-                                            |
+                                            <i class="fas fa-long-arrow-alt-down"></i>
                                             <i class="fas fa-volume-up"></i>
                                             @if($stream->audio_codec_name)
                                             {{ strtoupper($stream->audio_codec_name) }}
@@ -83,7 +84,7 @@
                                         </a>
                                     </td>
                                     <td class="center" style="font-family: monospace;">
-                                        <i class="fas fa-long-arrow-alt-up"></i>
+
                                         <a class="label label-default">
                                             <i class="fas fa-video"></i>
                                             @if(($stream->transcode)->video_codec)
@@ -91,7 +92,7 @@
                                             @else
                                             COPY
                                             @endif
-                                            |
+                                            <i class="fas fa-long-arrow-alt-up"></i>
                                             <i class="fas fa-volume-up"></i>
                                             @if(($stream->transcode)->audio_codec)
                                             {{ strtoupper(($stream->transcode)->audio_codec) }}
@@ -99,6 +100,13 @@
                                             COPY
                                             @endif
                                         </a>
+                                    </td>
+                                    <td class="center">
+                                        @if($stream->duration > 0)
+                                        <span style="color: DarkGreen;"><i class="fas fa-circle-notch fa-spin"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
+                                        @else
+                                        <span style="color: DarkSlateGray;"><i class="fas fa-stop"></i></i></span>
+                                        @endif
                                     </td>
                                     <td class="center">
                                         <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="fas fa-play"></i></a>
@@ -195,6 +203,7 @@
             check_state = 'uncheck_all';
             countChecked();
         });
+
         function countChecked() {
             if (check_state == 'check_all') {
                 $(".bulk_action input[name='mselect[]']").iCheck('check');
