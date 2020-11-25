@@ -114,6 +114,7 @@ if (isset($_GET['install'])) {
             $table->tinyInteger('restream')->default(0);
             $table->string('video_codec_name')->default('N/A');
             $table->string('audio_codec_name')->default('N/A');
+            $table->BigInteger('duration')->default(0);
             $table->tinyInteger('bitstreamfilter')->default(0);
             $table->tinyInteger('checker')->default(0);
             $table->tinyInteger('checkable')->default(0);
@@ -283,27 +284,8 @@ if (isset($_GET['install'])) {
 if (isset($_GET['update'])) {
 
     $db->schema()->table('streams', function ($table) use ($db) {
-        $db->schema()->hasColumn('streams', 'bitstreamfilter') ? '' : $table->tinyInteger('bitstreamfilter');
-        $db->schema()->hasColumn('streams', 'trans_id') ? '' : $table->Integer('trans_id');
-
-        $db->schema()->hasColumn('streams', 'streamurl2') ? '' : $table->string('streamurl2');
-        $db->schema()->hasColumn('streams', 'streamurl3') ? '' : $table->string('streamurl3');
-        $db->schema()->hasColumn('streams', 'checker') ? '' : $table->tinyInteger('checker');
-    });
-
-    $db->schema()->table('users', function ($table) use ($db) {
-        $db->schema()->hasColumn('users', 'lastconnected_ip') ? '' : $table->string('lastconnected_ip');
-        $db->schema()->hasColumn('users', 'exp_date') ? '' : $table->date('exp_date');
-        $db->schema()->hasColumn('users', 'last_stream') ? '' : $table->integer('last_stream');
-        $db->schema()->hasColumn('users', 'useragent') ? '' : $table->string('useragent');
-        $db->schema()->hasColumn('users', 'max_connections') ? '' : $table->integer('max_connections')->default('1');
-
-
-    });
-
-    $db->schema()->table('settings', function ($table) use ($db) {
-        $db->schema()->hasColumn('settings', 'less_secure') ? '' : $table->tinyInteger('less_secure')->default('1');
-        $db->schema()->hasColumn('settings', 'user_agent') ? '' : $table->string('user_agent')->default('Streamtool/ST2011');
+        $db->schema()->hasColumn('streams', 'duration') ? '' : $table->BigInteger('duration')->default(0);
+        
     });
 
     echo "update <br>" . PHP_EOL;
