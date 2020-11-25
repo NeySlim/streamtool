@@ -90,6 +90,7 @@ function stop_stream($id)
     $stream->pid = "0";
     $stream->running = 0;
     $stream->status = 0;
+    $stream->duration = 0;
 
     $stream->save();
 }
