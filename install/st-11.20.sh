@@ -209,7 +209,8 @@ spinner $PID "Starting Streamtool Webserver"
   sleep 1;
   streamPort=$(mysql -uroot -Nse "SELECT webport FROM streamtool.settings")
 } &>/dev/null
-sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php > /dev/null &
+sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php > /dev/null 2>&1 &
+sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/servicestat.php > /dev/null 2>&1 &
 echo ""
 echo -e "**************************************************\n*                                                *\n*          Streamtool install complete           *\n*                                                *\n*          http://$(hostname -I | cut -d ' ' -f1):9001\n*       Username: admin  Password: admin         *\n*                                                *\n**************************************************"
 

@@ -8,11 +8,10 @@ include('config.php');
 
 while (TRUE) {
     $setting = Setting::first();
-    !$setting->enableCheck  ? exit(0) : '';
-    foreach (Stream::where('pid', '!=', 0)->where('running', '=', 1)->where('checkable', '=', 1)->get() as $stream) {
+    //!$setting->enableCheck  ? exit(0) : '';
+    foreach (Stream::where('pid', '!=', 0)->where('running', '=', 1)->get() as $stream) {
         if (checkPid($stream->pid)) {
-            $stream->checker = 0;
-            $checkstreamurl = shell_exec('/usr/bin/timeout 3s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "/' . $setting->hlsfolder . '/' . $stream->id . '"_.m3u8" -v  quiet -print_format json -show_streams 2>&1');
+            $checkstreamurl = shell_exec('/usr/bin/timeout 3s ' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 9000000 -i "/opt/streamtool/app/wws/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8" -v  quiet -print_format json -show_streams 2>&1');
             $streaminfo = json_decode($checkstreamurl, true);
             if (count($streaminfo) > 0) {
                 $video = "";
