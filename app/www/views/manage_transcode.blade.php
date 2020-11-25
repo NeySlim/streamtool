@@ -211,7 +211,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">threads <span class="required">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="number" name="threads" class="form-control col-md-7 col-xs-12" placeholder="0" value="{{  isset($_POST['threads']) ?  $_POST['threads'] : ( empty($threads->bufsize) ? 0 : $threads->bufsize )  }}">
+                                <input type="number" name="threads" class="form-control col-md-7 col-xs-12" placeholder="0" value="{{  isset($_POST['threads']) ?  $_POST['threads'] : ( empty($transcode->threads) ? 0 : empty($transcode->threads ))  }}">
                                 0 is disabled
                             </div>
                         </div>
@@ -517,9 +517,9 @@
                 profileValues: profileValues4
             }
         };
-        var codec_default_value = "copy"; // {{ isset($_POST['video_codec']) ?  $_POST['video_codec']  == '' : $transcode->video_codec  == '' ? "selected" : "" }}
-        var preset_default_value = "fast"; //{{ isset($_POST['preset_values']) ?  $_POST['preset_values']  == '' : $transcode->preset_values  == '' ? "selected" : "" }}	        var preset_default_value = "{{ isset($_POST['preset_values']) ?  $_POST['preset_values']  == '' : $transcode->preset_values  == '' ? "selected" : "" }}"; //{{ isset($_POST['preset_values']) ?  $_POST['preset_values']  == '' : $transcode->preset_values  == '' ? "selected" : "" }}
-        var profile_default_value = ""; //{{ isset($_POST['profile']) ?  $_POST['profile']  == '' : $transcode->profile  == '' ? "selected" : "" }}
+        var codec_default_value = "{{  isset($_POST['video_codec']) ?  $_POST['video_codec']  : ( empty($transcode->video_codec) ? 'copy' : $transcode->video_codec ) }}";
+        var preset_default_value = "{{ isset($_POST['preset_values']) ?  $_POST['preset_values'] : ( empty($transcode->preset_values) ? 'veryfast' : $transcode->preset_values) }}"; 
+        var profile_default_value = "{{ isset($_POST['profile']) ?  $_POST['profile'] : ( empty($transcode->profile) ? '' : $transcode->profile ) }}"; 
         $(document).ready(function() {
 
             $("#video_codec").on("change", function() {
