@@ -104,11 +104,14 @@
                                     <td class="center">
                                         @if($stream->duration > 0)
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <span style="color: DarkGreen;"><i class="fas fa-circle-notch fa-spin"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
+                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
                                         @else
                                         <span style="color: DarkRed;"><i class="fas fa-exclamation-circle"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
                                         @endif
                                         @else
+                                        @if($stream->status_label["text"] == "RUNNING")
+                                        <span style="color: DarkGreen;"><i class="fas fa-spinner fa-spin"></i> starting</span>
+                                        @endif
                                         <span style="color: DarkSlateGray;"><i class="fas fa-stop"></i></i></span>
                                         @endif
                                     </td>

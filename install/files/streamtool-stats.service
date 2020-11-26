@@ -1,0 +1,14 @@
+[Unit]
+Description=Streamtool FPM
+After=streamtool.service
+
+[Service]
+Type=forking
+PIDFile=/opt/streamtool/app/php/var/run/php-fpm.pid
+ExecStart=/opt/streamtool/app/php/sbin/php-fpm --fpm-config /opt/streamtool/app/php/etc/php-fpm.conf --pid /opt/streamtool/app/php/var/run/php-fpm.pid
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=always
+
+[Install]
+WantedBy=streamtool.service
