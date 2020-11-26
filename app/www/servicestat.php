@@ -23,7 +23,7 @@ while (TRUE) {
                 list($key, $value) = explode('=', $row);
                 $output[$key] = $value;
             }
-            $framerate = $output['fps'];
+            $stream->fps = $output['fps'];
             $stream->duration = strtotime($output['out_time']);
         }
         $stream->save();
