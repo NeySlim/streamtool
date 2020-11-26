@@ -2,7 +2,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 7                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) 1997-2018 The PHP Group                                |
+  | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -15,8 +15,6 @@
   | Author: Wez Furlong <wez@php.net>                                    |
   +----------------------------------------------------------------------+
 */
-
-/* $Id$ */
 
 #ifndef PHP_PDO_DRIVER_H
 #define PHP_PDO_DRIVER_H
@@ -217,7 +215,7 @@ static inline zend_string *pdo_attr_strval(zval *options, enum pdo_attribute_typ
 	zval *v;
 
 	if (options && (v = zend_hash_index_find(Z_ARRVAL_P(options), option_name))) {
-		return zval_get_string(v);
+		return zval_try_get_string(v);
 	}
 	return defval ? zend_string_copy(defval) : NULL;
 }
@@ -435,7 +433,7 @@ enum pdo_placeholder_support {
 
 struct _pdo_dbh_t {
 	/* driver specific methods */
-	struct pdo_dbh_methods *methods;
+	const struct pdo_dbh_methods *methods;
 	/* driver specific data */
 	void *driver_data;
 
@@ -470,9 +468,12 @@ struct _pdo_dbh_t {
 	/* when set, convert int/floats to strings */
 	unsigned stringify:1;
 
+	/* bitmap for pdo_param_event(s) to skip in dispatch_param_event */
+	unsigned skip_param_evt:7;
+
 	/* the sum of the number of bits here and the bit fields preceding should
 	 * equal 32 */
-	unsigned _reserved_flags:21;
+	unsigned _reserved_flags:14;
 
 	/* data source string used to open this handle */
 	const char *data_source;
@@ -563,7 +564,7 @@ struct pdo_bound_param_data {
 /* represents a prepared statement */
 struct _pdo_stmt_t {
 	/* driver specifics */
-	struct pdo_stmt_methods *methods;
+	const struct pdo_stmt_methods *methods;
 	void *driver_data;
 
 	/* if true, we've already successfully executed this statement at least
@@ -661,9 +662,9 @@ struct _pdo_row_t {
 };
 
 /* call this in MINIT to register your PDO driver */
-PDO_API int php_pdo_register_driver(pdo_driver_t *driver);
+PDO_API int php_pdo_register_driver(const pdo_driver_t *driver);
 /* call this in MSHUTDOWN to unregister your PDO driver */
-PDO_API void php_pdo_unregister_driver(pdo_driver_t *driver);
+PDO_API void php_pdo_unregister_driver(const pdo_driver_t *driver);
 
 /* For the convenience of drivers, this function will parse a data source
  * string, of the form "name=value; name2=value2" and populate variables
@@ -693,12 +694,5 @@ PDO_API void php_pdo_dbh_delref(pdo_dbh_t *dbh);
 PDO_API void php_pdo_free_statement(pdo_stmt_t *stmt);
 
 
+PDO_API void pdo_throw_exception(unsigned int driver_errcode, char *driver_errmsg, pdo_error_type *pdo_error);
 #endif /* PHP_PDO_DRIVER_H */
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: noet sw=4 ts=4 fdm=marker
- * vim<600: noet sw=4 ts=4
- */

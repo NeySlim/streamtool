@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | Zend Engine                                                          |
    +----------------------------------------------------------------------+
-   | Copyright (c) 1998-2018 Zend Technologies Ltd. (http://www.zend.com) |
+   | Copyright (c) Zend Technologies Ltd. (http://www.zend.com)           |
    +----------------------------------------------------------------------+
    | This source file is subject to version 2.00 of the Zend license,     |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -16,8 +16,6 @@
    |          Bob Weinand <bobwei9@hotmail.com>                           |
    +----------------------------------------------------------------------+
 */
-
-/* $Id$ */
 
 #ifndef ZEND_GENERATORS_H
 #define ZEND_GENERATORS_H
@@ -41,12 +39,12 @@ typedef struct _zend_generator zend_generator;
 struct _zend_generator_node {
 	zend_generator *parent; /* NULL for root */
 	uint32_t children;
-	union { /* HashTable / hard coded array for faster access */
-		HashTable ht; /* if > 4 children */
-		struct {
+	union {
+		HashTable *ht; /* if multiple children */
+		struct { /* if one child */
 			zend_generator *leaf;
 			zend_generator *child;
-		} array[4]; /* if <= 4 children */
+		} single;
 	} child;
 	union {
 		zend_generator *leaf; /* if > 0 children */
@@ -136,13 +134,3 @@ static zend_always_inline zend_generator *zend_generator_get_current(zend_genera
 END_EXTERN_C()
 
 #endif
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * indent-tabs-mode: t
- * End:
- * vim600: sw=4 ts=4 fdm=marker
- * vim<600: sw=4 ts=4
- */

@@ -2,7 +2,7 @@
   +----------------------------------------------------------------------+
   | PHP Version 7                                                        |
   +----------------------------------------------------------------------+
-  | Copyright (c) 1997-2018 The PHP Group                                |
+  | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
   | that is bundled with this package in the file LICENSE, and is        |
@@ -16,8 +16,6 @@
   |          Andrey Hristov <andrey@php.net>                             |
   |          Ulf Wendel <uw@php.net>                                     |
   +----------------------------------------------------------------------+
-
-  $Id$
 */
 
 #ifndef PHP_MYSQLI_STRUCTS_H
@@ -56,12 +54,6 @@
 #define WE_HAD_MBSTATE_T
 #endif
 
-#if defined(ulong) && !defined(HAVE_ULONG)
-#define HAVE_ULONG
-#endif
-
-#include <my_global.h>
-
 #if !defined(HAVE_MBRLEN) && defined(WE_HAD_MBRLEN)
 #define HAVE_MBRLEN 1
 #endif
@@ -70,20 +62,12 @@
 #define HAVE_MBSTATE_T 1
 #endif
 
-/*
-  We need more than mysql.h because we need CHARSET_INFO in one place.
-  This order has been borrowed from the ODBC driver. Nothing can be removed
-  from the list of headers :(
-*/
-
-#include <my_sys.h>
 #include <mysql.h>
+#if MYSQL_VERSION_ID >= 80000 &&  MYSQL_VERSION_ID < 100000
+typedef _Bool		my_bool;
+#endif
 #include <errmsg.h>
-#include <my_list.h>
-#include <m_string.h>
 #include <mysqld_error.h>
-#include <my_list.h>
-#include <m_ctype.h>
 #include "mysqli_libmysql.h"
 #endif /* MYSQLI_USE_MYSQLND */
 
@@ -164,7 +148,7 @@ struct st_mysqli_warning {
 typedef struct _mysqli_property_entry {
 	const char *pname;
 	size_t pname_length;
-	zval *(*r_func)(mysqli_object *obj, zval *retval);
+	int (*r_func)(mysqli_object *obj, zval *retval, zend_bool quiet);
 	int (*w_func)(mysqli_object *obj, zval *value);
 } mysqli_property_entry;
 
@@ -211,7 +195,7 @@ extern void php_mysqli_dtor_p_elements(void *data);
 
 extern void php_mysqli_close(MY_MYSQL * mysql, int close_type, int resource_status);
 
-extern zend_object_iterator_funcs php_mysqli_result_iterator_funcs;
+extern const zend_object_iterator_funcs php_mysqli_result_iterator_funcs;
 extern zend_object_iterator *php_mysqli_result_get_iterator(zend_class_entry *ce, zval *object, int by_ref);
 
 extern void php_mysqli_fetch_into_hash_aux(zval *return_value, MYSQL_RES * result, zend_long fetchtype);
@@ -256,12 +240,12 @@ extern void php_mysqli_fetch_into_hash_aux(zval *return_value, MYSQL_RES * resul
 	mysqli_object *intern = Z_MYSQLI_P(__id); \
 	if (!(my_res = (MYSQLI_RESOURCE *)intern->ptr)) {\
   		php_error_docref(NULL, E_WARNING, "Couldn't fetch %s", ZSTR_VAL(intern->zo.ce->name));\
-  		RETURN_NULL();\
+		RETURN_FALSE;\
   	}\
 	__ptr = (__type)my_res->ptr; \
 	if (__check && my_res->status < __check) { \
 		php_error_docref(NULL, E_WARNING, "invalid object or resource %s\n", ZSTR_VAL(intern->zo.ce->name)); \
-		RETURN_NULL();\
+		RETURN_FALSE;\
 	}\
 }
 
@@ -344,20 +328,6 @@ ZEND_END_MODULE_GLOBALS(mysqli)
 ZEND_TSRMLS_CACHE_EXTERN()
 #endif
 
-#define my_estrdup(x) (x) ? estrdup(x) : NULL
-#define my_efree(x) if (x) efree(x)
-
 ZEND_EXTERN_MODULE_GLOBALS(mysqli)
 
 #endif	/* PHP_MYSQLI_STRUCTS.H */
-
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * indent-tabs-mode: t
- * End:
- * vim600: noet sw=4 ts=4 fdm=marker
- * vim<600: noet sw=4 ts=4
- */

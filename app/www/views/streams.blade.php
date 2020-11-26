@@ -111,8 +111,9 @@
                                         @else
                                         @if($stream->status_label["text"] == "RUNNING")
                                         <span style="color: DarkGreen;"><i class="fas fa-spinner fa-spin"></i> starting</span>
+                                        @else
+                                        <span style="color: DarkSlateGray;"><i class="fas fa-stop-circle"></i></i></span>
                                         @endif
-                                        <span style="color: DarkSlateGray;"><i class="fas fa-stop"></i></i></span>
                                         @endif
                                     </td>
                                     <td class="center">
