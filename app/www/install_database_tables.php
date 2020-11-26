@@ -115,6 +115,7 @@ if (isset($_GET['install'])) {
             $table->string('video_codec_name')->default('N/A');
             $table->string('audio_codec_name')->default('N/A');
             $table->BigInteger('duration')->default(0);
+            $table->string('fps')->default('');
             $table->tinyInteger('bitstreamfilter')->default(0);
             $table->tinyInteger('checker')->default(0);
             $table->tinyInteger('checkable')->default(0);
@@ -285,7 +286,7 @@ if (isset($_GET['update'])) {
 
     $db->schema()->table('streams', function ($table) use ($db) {
         $db->schema()->hasColumn('streams', 'duration') ? '' : $table->BigInteger('duration')->default(0);
-        
+        $db->schema()->hasColumn('streams', 'fps') ? '' : $table->string('fps')->default('');
     });
     $db->schema()->table('settings', function ($table) use ($db) {
         $db->schema()->hasColumn('settings', 'server_name') ? '' : $table->string('server_name')->default('Streamtool');

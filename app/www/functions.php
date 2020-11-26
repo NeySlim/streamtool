@@ -115,6 +115,7 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg .= ' -hls_segment_filename /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%03d.ts  /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 ';
     if ($trans) {
         $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
+        $ffmpeg .= ' -progress /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.stats';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '15000000');
         $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '12000000');
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
@@ -151,7 +152,7 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
         $ffmpeg .= $trans->deinterlance ? ($nvencpos ? ' -vf yadif_cuda' : ' -vf yadif') : '';
         $ffmpeg .= $endofffmpeg;
-        file_put_contents('/opt/streamtool/app/wws/log/streamtool-ffmpeg' . $id . '.log', $ffmpeg, FILE_APPEND);
+        file_put_contents('/tmp/streamtool-ffmpeg_' . $id . '.log', $ffmpeg . PHP_EOL , FILE_APPEND);
         return $ffmpeg;
     }
 
