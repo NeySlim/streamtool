@@ -32,6 +32,7 @@ if (isset($_POST['stop_cron'])) {
     $setting->enableCheck = "0";
     $setting->save();
     exec('/usr/bin/sudo /usr/bin/systemctl stop streamtool-watcher');
+    usleep(500000);
     $message = ['type' => 'error', 'message' => "Stream process watcher stopped"];
 }
 
