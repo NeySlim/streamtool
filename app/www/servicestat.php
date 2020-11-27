@@ -23,8 +23,8 @@ while (TRUE) {
                 list($key, $value) = explode('=', $row);
                 $output[$key] = $value;
             }
-            $stream->fps = $output['fps'];
-            $stream->duration = strtotime($output['out_time']);
+            $stream->fps = !empty($output['fps']) ? $output['fps'] : $stream->fps;
+            $stream->duration = !empty(strtotime($output['out_time'])) ? strtotime($output['out_time']) : $stream->duration;
         }
         $stream->save();
         
