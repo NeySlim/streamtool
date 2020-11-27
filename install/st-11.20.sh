@@ -1,4 +1,7 @@
 #!/bin/bash
+INSTALL_FILE=`pwd`/$0
+PAYLOAD_LINE=`awk '/^__BINARY_DATA__/ {print NR + 1; exit 0; }' $INSTALL_FILE`
+
 spinner() {
   PID=$1
   text=$2
@@ -14,7 +17,6 @@ spinner() {
   echo -en " - $text\n"
 }
 
-PAYLOAD_LINE=`awk '/^__BINARY_DATA__/ {print NR + 1; exit 0; }' $0`
 
 if [ -f /etc/lsb-release ]; then
   . /etc/lsb-release
@@ -56,7 +58,6 @@ hlsFolder="/opt/streamtool/app/www/${hlsFolder}"
   killall ffmpeg-streamtool
   killall ffmpeg-streamtool
 
-  cd /opt/
   while [ ! -z "$(mount -l | grep ${hlsFolder})" ]; do
     umount $hlsFolder
     sleep .1
@@ -75,7 +76,7 @@ apt-get update >/dev/null 2>&1 &
 PID=$!
 spinner $PID "repositories"
 
-apt-get full-upgrade --allow-downgrades --allow-remove-essential --allow-unauthenticated -y >/dev/null 2>&1 &
+apt-get full-upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --allow-downgrades --allow-remove-essential --allow-unauthenticated -y >/dev/null 2>&1 &
 PID=$!
 spinner $PID "Full upgrade"
 
@@ -83,9 +84,9 @@ apt-get autoremove --allow-downgrades --allow-remove-essential --allow-unauthent
 PID=$!
 spinner $PID "Removing unnecessary packages"
 
-apt-get install --allow-downgrades  --allow-unauthenticated -y sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools ffmpeg libavcodec-extra58 libavfilter-extra7 >/dev/null 2>&1 &
-apt-get install --allow-downgrades  --allow-unauthenticated -y libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 >/dev/null 2>&1 &
-apt-get install --allow-downgrades  --allow-unauthenticated -y libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 >/dev/null 2>&1 &
+apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --allow-downgrades  --allow-unauthenticated -y sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools ffmpeg libavcodec-extra58 libavfilter-extra7 >/dev/null 2>&1 &
+apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --allow-downgrades  --allow-unauthenticated -y libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 >/dev/null 2>&1 &
+apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --allow-downgrades  --allow-unauthenticated -y libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 >/dev/null 2>&1 &
 PID=$!
 spinner $PID "Installing ubuntu required packages"
 
@@ -93,9 +94,9 @@ echo ""
 echo ""
 echo "Installing Streamtool"
 
-#git clone https://github.com/NeySlim/streamtool >/dev/null 2>&1 &
 
-tail -n+$PAYLOAD_LINE $0 | tar jxvf  -C /opt/. >/dev/null 2>&1 &
+
+tail -n+$PAYLOAD_LINE $0 | tar -xvz -C /opt >/dev/null 2>&1 &
 
 PID=$!
 spinner $PID "Extracting software"
@@ -104,11 +105,11 @@ echo " - Configuring system"
 
 {
   /usr/sbin/useradd -s /sbin/nologin -U -d /opt/streamtool -m streamtool
-  
-sed -i '/streamtool to match/d' /etc/sudoers
-echo 'streamtool ALL=(ALL) NOPASSWD: /usr/bin/systemctl
-streamtool ALL=(ALL) NOPASSWD: /tmp/patch.sh
-streamtool ALL=(ALL) NOPASSWD: /opt/streamtool/app/nginx/sbin/nginx_streamtool' >>/etc/sudoers
+ sed -i '/streamtool to match/d' /etc/sudoers
+echo 'streamtool ALL=NOPASSWD: /usr/bin/systemctl
+streamtool ALL=NOPASSWD: /tmp/patch.sh
+streamtool ALL=NOPASSWD: /opt/streamtool/app/nginx/sbin/nginx_streamtool' >>/etc/sudoers
+
 
   cp /opt/streamtool/install/files/streamtool*.service /etc/systemd/system/.
   systemctl daemon-reload
@@ -209,8 +210,8 @@ spinner $PID "Starting Streamtool Webserver"
 {
   curl -s http://127.0.0.1:9001/install_database_tables.php?install
   curl -s http://127.0.0.1:9001/install_database_tables.php?update
-  rm -rf /opt/streamtool/app/www/install_database_tables.php /opt/streamtool/install/
-  sleep 2;
+  rm -f /opt/streamtool/app/www/install_database_tables.php 
+  sleep 1;
   streamPort=$(mysql -uroot -Nse "SELECT webport FROM streamtool.settings")
 } &>/dev/null
 systemctl start streamtool-watcher streamtool-stats
