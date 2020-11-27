@@ -1,7 +1,5 @@
 /*
    +----------------------------------------------------------------------+
-   | PHP Version 7                                                        |
-   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -16,7 +14,7 @@
    +----------------------------------------------------------------------+
 */
 
-#define CONFIGURE_COMMAND " './configure'  '--prefix=/opt/streamtool/app/php' '--config-cache' '--disable-cgi' '--enable-static=' '--enable-shared=' '--with-tsrm-pthreads' '--disable-phpdbg' '--with-msgpack' '--with-zlib-dir' '--with-freetype-dir' '--enable-mbstring' '--with-libxml-dir=/usr' '--enable-soap' '--enable-calendar' '--with-mcrypt' '--with-gd' '--without-pgsql' '--disable-rpath' '--enable-inline-optimization' '--with-bz2' '--with-zlib' '--enable-sockets' '--enable-sysvsem' '--enable-sysvshm' '--enable-sysvmsg' '--enable-pcntl' '--enable-mbregex' '--enable-exif' '--enable-bcmath' '--with-mhash' '--enable-zip' '--with-pcre-regex' '--with-pdo-mysql' '--without-pdo-pgsql' '--with-mysqli' '--enable-embedded-mysqli' '--with-mysql-sock=/var/run/mysqld/mysqld.sock' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-openssl' '--with-fpm-user=streamtool' '--with-fpm-group=streamtool' '--with-libdir=/lib/x86_64-linux-gnu' '--enable-ftp' '--without-kerberos' '--without-imap' '--without-imap-ssl' '--enable-intl' '--with-pcre-jit' '--enable-apc' '--enable-apcu' '--with-curl' '--with-imagick' '--enable-memcached' '--enable-memcached-protocol' '--enable-memcached-msgpack' '--with-tidy' '--enable-shmop' '--with-gettext' '--with-xmlrpc' '--without-xsl' '--enable-opcache' '--enable-fpm'"
+#define CONFIGURE_COMMAND " './configure'  '--prefix=/opt/streamtool/app/php' '--config-cache' '--disable-cgi' '--enable-static=' '--enable-shared=' '--with-tsrm-pthreads' '--disable-phpdbg' '--with-msgpack' '--with-zlib-dir' '--with-freetype-dir' '--enable-mbstring' '--with-libxml-dir=/usr' '--enable-soap' '--enable-calendar' '--enable-mcrypt' '--enable-gd' '--without-pgsql' '--disable-rpath' '--enable-inline-optimization' '--with-bz2' '--with-zlib' '--enable-sockets' '--enable-sysvsem' '--enable-sysvshm' '--enable-sysvmsg' '--enable-pcntl' '--enable-mbregex' '--enable-exif' '--enable-bcmath' '--with-mhash' '--enable-zip' '--with-pcre-regex' '--with-pdo-mysql' '--without-pdo-pgsql' '--with-mysqli' '--enable-embedded-mysqli' '--with-mysql-sock=/var/run/mysqld/mysqld.sock' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-openssl' '--with-fpm-user=streamtool' '--with-fpm-group=streamtool' '--with-libdir=/lib/x86_64-linux-gnu' '--enable-ftp' '--without-kerberos' '--without-imap' '--without-imap-ssl' '--enable-intl' '--with-pcre-jit' '--enable-apc' '--enable-apcu' '--with-curl' '--with-imagick' '--enable-memcached' '--enable-memcached-protocol' '--enable-memcached-msgpack' '--with-tidy' '--enable-shmop' '--with-gettext' '--with-xmlrpc' '--without-xsl' '--enable-opcache' '--enable-fpm' '--with-freetype-dir=no'"
 #define PHP_ODBC_CFLAGS	""
 #define PHP_ODBC_LFLAGS		""
 #define PHP_ODBC_LIBS		""
@@ -26,7 +24,7 @@
 #define PHP_PROG_SENDMAIL	"/usr/sbin/sendmail"
 #define PEAR_INSTALLDIR         ""
 #define PHP_INCLUDE_PATH	".:"
-#define PHP_EXTENSION_DIR       "/opt/streamtool/app/php/lib/php/extensions/no-debug-non-zts-20190902"
+#define PHP_EXTENSION_DIR       "/opt/streamtool/app/php/lib/php/extensions/no-debug-non-zts-20200930"
 #define PHP_PREFIX              "/opt/streamtool/app/php"
 #define PHP_BINDIR              "/opt/streamtool/app/php/bin"
 #define PHP_SBINDIR             "/opt/streamtool/app/php/sbin"
