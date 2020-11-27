@@ -25,13 +25,13 @@ if (isset($_GET['restart'])) {
 if (isset($_POST['start_cron'])) {
     $setting->enableCheck = "1";
     $setting->save();
-    exec(sprintf("%s > %s 2>&1 & ", "/opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php" , "/tmp/streamtool-watcher.log"));
+    exec('/usr/bin/sudo /usr/bin/systemctl start streamtool-watcher');
     $message = ['type' => 'success', 'message' => "Stream process watcher started"];
 }
 if (isset($_POST['stop_cron'])) {
     $setting->enableCheck = "0";
     $setting->save();
-    sleep(1);
+    exec('/usr/bin/sudo /usr/bin/systemctl stop streamtool-watcher');
     $message = ['type' => 'error', 'message' => "Stream process watcher stopped"];
 }
 

@@ -1,12 +1,12 @@
 [Unit]
-Description=Streamtool Stats Service
+Description=Streamtool Watcher Service
 After=streamtool-fpm.service
 Requires=streamtool-fpm.service
 
 [Service]
 Restart=always
 Type=simple
-ExecStart=/bin/sh -c '/opt/streamtool/app/php/bin/php -f /opt/streamtool/app/www/servicestat.php  2>&1 > /opt/streamtool/app/logs/statservice.log'
+ExecStart=/bin/sh -c '/opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php  2>&1 > /opt/streamtool/app/logs/watcher.log'
 User=streamtool
 Group=streamtool
 KillMode=mixed

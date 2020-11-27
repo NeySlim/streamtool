@@ -23,11 +23,15 @@ while (TRUE) {
                 list($key, $value) = explode('=', $row);
                 $output[$key] = $value;
             }
-            $stream->fps = !empty($output['fps']) ? $output['fps'] : $stream->fps;
-            $stream->duration = !empty(strtotime($output['out_time'])) ? strtotime($output['out_time']) : $stream->duration;
+            !empty($output['fps']) ? $stream->fps = $output['fps'] : '';
+            !empty(strtotime($output['out_time'])) ? $stream->duration = strtotime($output['out_time']) : '';
         }
         $stream->save();
-        
+        $statFile = null;
+        $input = null;
+        $data = null;
+        $output = null;
+        $f = null;
     }
     sleep(1);
 }

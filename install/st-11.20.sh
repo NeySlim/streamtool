@@ -104,8 +104,12 @@ echo " - Configuring system"
 
 {
   /usr/sbin/useradd -s /sbin/nologin -U -d /opt/streamtool -m streamtool
-  grep -qxF 'streamtool ALL = (root) NOPASSWD: /usr/bin/systemctl' /etc/sudoers || echo 'streamtool ALL = (root) NOPASSWD: /usr/bin/systemctl' >>/etc/sudoers
-  grep -qxF 'streamtool ALL=(ALL) NOPASSWD: /tmp/patch.sh' /etc/sudoers || echo 'streamtool ALL=(ALL) NOPASSWD: /tmp/patch.sh' >>/etc/sudoers
+  
+sed -i '/streamtool to match/d' /etc/sudoers
+echo 'streamtool ALL=(ALL) NOPASSWD: /usr/bin/systemctl
+streamtool ALL=(ALL) NOPASSWD: /tmp/patch.sh
+streamtool ALL=(ALL) NOPASSWD: /opt/streamtool/app/nginx/sbin/nginx_streamtool' >>/etc/sudoers
+
   cp /opt/streamtool/install/files/streamtool*.service /etc/systemd/system/.
   systemctl daemon-reload
   systemctl enable streamtool streamtool-webserver streamtool-fpm
@@ -199,18 +203,17 @@ echo ""
 echo ""
 
 systemctl start streamtool
-sleep 5 &
+sleep 1 &
 PID=$!
 spinner $PID "Starting Streamtool Webserver"
 {
   curl -s http://127.0.0.1:9001/install_database_tables.php?install
   curl -s http://127.0.0.1:9001/install_database_tables.php?update
   rm -rf /opt/streamtool/app/www/install_database_tables.php /opt/streamtool/install/
-  sleep 1;
+  sleep 2;
   streamPort=$(mysql -uroot -Nse "SELECT webport FROM streamtool.settings")
 } &>/dev/null
-sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/cron.php > /dev/null 2>&1 &
-sudo -u streamtool -- /opt/streamtool/app/php/bin/php /opt/streamtool/app/www/servicestat.php > /dev/null 2>&1 &
+systemctl start streamtool-watcher streamtool-stats
 echo ""
 echo -e "**************************************************\n*                                                *\n*          Streamtool install complete           *\n*                                                *\n*          http://$(hostname -I | cut -d ' ' -f1):9001\n*       Username: admin  Password: admin         *\n*                                                *\n**************************************************"
 

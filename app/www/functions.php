@@ -74,7 +74,7 @@ function csv_to_array($filename = '', $delimiter = ',')
 function patchnv()
 {
     copy('https://raw.githubusercontent.com/keylase/nvidia-patch/master/patch.sh', '/tmp/patch.sh');
-    $patchresult = shell_exec('/usr/bin/chmod +x /tmp/patch.sh && /usr/bin/sudo /tmp/patch.sh');
+    $patchresult = shell_exec('/bin/bash /tmp/patch.sh');
     return $patchresult;
 }
 
