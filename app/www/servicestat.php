@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 if (isset($_SERVER['SERVER_ADDR'])) {
     if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) {
         die('access is not permitted');
