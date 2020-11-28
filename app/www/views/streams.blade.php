@@ -104,9 +104,9 @@
                                     <td class="center">
                                         @if($stream->duration > 0)
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle fa-xs"></i> {{ gmdate("H:i:s", $stream->duration) }} <i class="fas fa-tv fa-xs"></i>{{ $stream->fps }}</span>
+                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle fa-xs"></i> {{ secondsToTime($stream->duration) }} - <i class="fas fa-wave-square fa-xs"></i> {{ $stream->fps }} fps</span>
                                         @else
-                                        <span style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ gmdate("H:i:s", $stream->duration) }}</span>
+                                        <span style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</span>
                                         @endif
                                         @else
                                         @if($stream->status_label["text"] == "RUNNING")
@@ -141,6 +141,8 @@
     <!-- Datatables -->
     <script src="js/datatables/js/jquery.dataTables.js"></script>
     <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
+
+</script>
     <script>
         $(document).ready(function() {
             $('input.tableflat').iCheck({
@@ -159,9 +161,12 @@
                         'aTargets': [0]
                     } //disables sorting for column one
                 ],
-                'iDisplayLength': 50,
+                'iDisplayLength': 30,
                 "sPaginationType": "full_numbers"
             });
+            setInterval(function() {
+                oTable.rows().invalidate().draw(); 
+            }, 5000 );
             $("tfoot input").keyup(function() {
                 /* Filter on the column based on the index of this element's parent <th> */
                 oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
@@ -229,5 +234,6 @@
                 $('.bulk-actions').hide();
             }
         }
+        
     </script>
     @endsection

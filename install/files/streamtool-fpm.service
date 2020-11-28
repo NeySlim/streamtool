@@ -9,6 +9,7 @@ ExecStart=/opt/streamtool/app/php/sbin/php-fpm --fpm-config /opt/streamtool/app/
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 Restart=always
+KillMode=control-group
 
 [Install]
 WantedBy=streamtool.service
