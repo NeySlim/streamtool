@@ -25,7 +25,7 @@ while (TRUE) {
                 $output[$key] = $value;
             }
             !empty($output['fps']) ? $stream->fps = $output['fps'] : '';
-            !empty(strtotime($output['out_time'])) ? $stream->duration = strtotime($output['out_time']) : '';
+            !empty(strtotime($output['out_time_ms'])) ? $stream->duration = strtotime($output['out_time_ms']) / 1000 : '';
         }
         $stream->save();
         $statFile = null;
@@ -34,5 +34,5 @@ while (TRUE) {
         $output = null;
         $f = null;
     }
-    sleep(1);
+    sleep(2);
 }

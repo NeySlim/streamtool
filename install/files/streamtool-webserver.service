@@ -10,8 +10,8 @@ PIDFile=/opt/streamtool/app/nginx/pid/nginx.pid
 ExecStart=/opt/streamtool/app/nginx/sbin/nginx_streamtool
 ExecStartPre=/opt/streamtool/app/nginx/sbin/nginx_streamtool -t
 ExecReload=/opt/streamtool/app/nginx/sbin/nginx_streamtool -s reload
-ExecStop=/bin/kill -s QUIT $MAINPID
 PrivateTmp=true
+KillMode=control-group
 
 
 [Install]

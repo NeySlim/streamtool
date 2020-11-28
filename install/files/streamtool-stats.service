@@ -9,7 +9,7 @@ Type=simple
 ExecStart=/bin/sh -c '/opt/streamtool/app/php/bin/php -f /opt/streamtool/app/www/servicestat.php  2>&1 > /opt/streamtool/app/logs/statservice.log'
 User=streamtool
 Group=streamtool
-KillMode=process
+KillMode=control-group
 
 [Install]
 WantedBy=default.target
