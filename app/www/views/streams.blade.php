@@ -104,7 +104,7 @@
                                     <td class="center">
                                         @if($stream->duration > 0)
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle fa-xs"></i> {{ secondsToTime($stream->duration) }} - <i class="fas fa-wave-square fa-xs"></i> {{ $stream->fps }} fps</span>
+                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}  <i class="fas fa-film"></i></i> {{ $stream->fps }} fps</span>
                                         @else
                                         <span style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</span>
                                         @endif
