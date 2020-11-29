@@ -38,7 +38,7 @@ echo ""
 echo "Cleaning mount point & user"
 {
   streamPort=""
-
+  systemctl stop streamtool-stats streamtool-watcher
    for mount in `mount -l |grep tmpfs | cut -d ' ' -f3 |grep streamtool`; do 
     umount $mount
   done
@@ -50,7 +50,7 @@ then
       hlsFolder="/hls"
 fi
 hlsFolder="/opt/streamtool/app/www/${hlsFolder}"
-  systemctl stop streamtool-webserver streamtool-fpm streamtool
+  systemctl stop streamtool-webserver streamtool-fpm streamtool 
   killall /opt/streamtool/app/php/bin/php
   killall /opt/streamtool/app/php/bin/php
   killall ffmpeg
