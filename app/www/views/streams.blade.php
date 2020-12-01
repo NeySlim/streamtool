@@ -30,11 +30,11 @@
                     </div>
                     @endif
                     <div class="">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
+                        <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action table-condensed" style="font-family: Work Sans,sans-serif;">
                             <thead>
-                                <tr class="headings">
+                                <tr class="headings" style="font-family: Work Sans,sans-serif;">
                                     <th>
-                                        <input type="checkbox" id="check-all" class="flat">
+                                        <input type="checkbox" id="check-all" }}>
                                     </th>
                                     <th>Name</th>
                                     <th>Status</th>
@@ -50,12 +50,12 @@
                                 @foreach($streams as $key => $stream)
                                 <tr>
                                     <td class="center"><input type="checkbox" class="tableflat check" value="{{ $stream->id }}" name="mselect[]"></td>
-                                    <td style="font-family: system-ui; font-weight: bold;">
+                                    <td style="font-family: Work Sans,sans-serif;">
                                         {{ strtoupper($stream->name) }}
                                     </td>
                                     <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label['text'] }}</span>
                                         @if($stream->checker == 0)
-                                        <span class="label label-info"><i class="fas fa-check-circle"></i> Primary URL</span>
+                                        <span class="label label-info" ><i class="fas fa-check-circle"></i> Primary URL</span>
                                         @endif
                                         @if($stream->checker == 2)
                                         <span class="label label-info"><i class="fas fa-exclamation-circle"></i> >Backup URL 1</span>
@@ -64,7 +64,7 @@
                                         <span class="label label-info"><i class="fas fa-exclamation-circle"></i> Backup URL 2</span>
                                         @endif
                                     </td>
-                                    <td class="center"><a class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
+                                    <td class="center"><a color="purple" class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
                                     <td style="font-family: monospace;" class="center">
 
                                         <a class="label label-default">
@@ -104,15 +104,15 @@
                                     <td class="center">
                                         @if($stream->duration > 0)
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <span style="color: DarkGreen;"><i class="fas fa-play-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}  <i class="fas fa-film"></i></i> {{ $stream->fps }} fps</span>
+                                        <a style="color: DarkGreen;"><i class="fa fa-clock fa-xs"></i></a><a> {{ secondsToTime($stream->duration) }} </> <a style="color: DarkGreen;"><i class="fas fa-wave-square fa-xs"></i></a> {{ $stream->fps }} fps
                                         @else
-                                        <span style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</span>
+                                        <a style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</a>
                                         @endif
                                         @else
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <span style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</span>
+                                        <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</a>
                                         @else
-                                        <span style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></span>
+                                        <a style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></a>
                                         @endif
                                         @endif
                                     </td>
@@ -121,7 +121,7 @@
                                         <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="fas fa-stop"></i></a>
                                         <a class="btn-warning btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-redo-alt"></i></a>
                                         <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i></a>
-                                        <a class="pull-right btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-trash-alt"></i></a>
+                                        <a class="btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                     @endforeach
                             </tbody>
@@ -144,12 +144,6 @@
 
 </script>
     <script>
-        $(document).ready(function() {
-            $('input.tableflat').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-        });
         var asInitVals = new Array();
         $(document).ready(function() {
             var oTable = $('#example').dataTable({

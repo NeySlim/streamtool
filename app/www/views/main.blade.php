@@ -15,6 +15,7 @@
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/icheck/flat/green.css" rel="stylesheet">
     <link href="css/datatables/tools/css/dataTables.tableTools.css" rel="stylesheet">
+    <link href='css/gstatic.css' rel='stylesheet' type='text/css'>
     <script src="js/jquery.min.js"></script>
     <script data-search-pseudo-elements src="fonts/js/all.js"></script>
     <!--[if lt IE 9]>
