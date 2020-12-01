@@ -55,7 +55,7 @@
                                     </td>
                                     <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label['text'] }}</span>
                                         @if($stream->checker == 0)
-                                        <span class="label label-info" ><i class="fas fa-check-circle"></i> Primary URL</span>
+                                        <span class="label label-info"><i class="fas fa-check-circle"></i> Primary URL</span>
                                         @endif
                                         @if($stream->checker == 2)
                                         <span class="label label-info"><i class="fas fa-exclamation-circle"></i> >Backup URL 1</span>
@@ -105,16 +105,16 @@
                                         @if($stream->duration > 0)
                                         @if($stream->status_label["text"] == "RUNNING")
                                         <a style="color: DarkGreen;"><i class="fa fa-clock fa-xs"></i></a><a> {{ secondsToTime($stream->duration) }} </> <a style="color: DarkGreen;"><i class="fas fa-wave-square fa-xs"></i></a> {{ $stream->fps }} fps
-                                        @else
-                                        <a style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</a>
-                                        @endif
-                                        @else
-                                        @if($stream->status_label["text"] == "RUNNING")
-                                        <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</a>
-                                        @else
-                                        <a style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></a>
-                                        @endif
-                                        @endif
+                                            @else
+                                            <a style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</a>
+                                            @endif
+                                            @else
+                                            @if($stream->status_label["text"] == "RUNNING")
+                                            <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</a>
+                                            @else
+                                            <a style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></a>
+                                            @endif
+                                            @endif
                                     </td>
                                     <td class="center">
                                         <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="fas fa-play"></i></a>
@@ -142,7 +142,7 @@
     <script src="js/datatables/js/jquery.dataTables.js"></script>
     <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-</script>
+    </script>
     <script>
         var asInitVals = new Array();
         $(document).ready(function() {
@@ -159,8 +159,8 @@
                 "sPaginationType": "full_numbers"
             });
             setInterval(function() {
-                oTable.rows().invalidate().draw(); 
-            }, 5000 );
+                oTable.rows().invalidate().draw();
+            }, 5000);
             $("tfoot input").keyup(function() {
                 /* Filter on the column based on the index of this element's parent <th> */
                 oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
@@ -228,6 +228,5 @@
                 $('.bulk-actions').hide();
             }
         }
-        
     </script>
     @endsection
