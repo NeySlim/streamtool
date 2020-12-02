@@ -6,227 +6,168 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>{{ $title }} </h2>
+                    <h2>Users </h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a class="btn btn-round btn-primary btn-sm" href="manage_stream.php" title="Add">
-                            Add stream
+                        <a class="btn btn-round btn-primary btn-sm btn-sm" href="manage_user.php" title="Add">
+                            Add user
                         </a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <form action="" method="post">
-                    <button type="submit" name="mass_start" value="Mass start" class="btn btn-sm btn-success" onclick="return confirm('Mass start ?')"><i class="far fa-play-circle"></i> MASS START</button>
-                    <button type="submit" name="mass_stop" value="Mass stop" class="btn btn-sm btn-danger" onclick="return confirm('Mass stop ?')"><i class="far fa-stop-circle"></i> MASS STOP</button>
-                    <button type="submit" name="mass_delete" value="Mass delete" class="btn btn-sm btn-danger" onclick="return confirm('Mass delete ?')"><i class="far fa-times-circle"></i> MASS DELETE</button>
-                    @if($cronStatus == 1)
-                    <button style="float: right;" type="submit" name="stop_cron" value="Stop stream watcher" class="btn btn-sm btn-warning"><i class="fas fa-hand-paper"></i> Stop stream watcher</button>
-                    @else
-                    <button style="float: right;" type="submit" name="start_cron" value="Start stream watcher" class="btn btn-sm btn-success"><i class="fas fa-play"></i>| Start stream watcher</button>
-                    @endif
-                    @if(count($streams) > 0)
-                    @if($message)
-                    <div class="alert alert-{{ $message['type'] }}">
-                        {{ $message['message'] }}
-                    </div>
-                    @endif
-                    <div class="">
-                        <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action table-condensed" style="font-family: Work Sans,sans-serif;">
+                <div class="">
+                    @if(count($users) > 0)
+
+                        @if($message)
+                            <div class="alert alert-{{ $message['type'] }}">
+                                {{ $message['message'] }}
+                            </div>
+                        @endif
+                        <table id="example" class="table table-striped responsive-utilities jambo_table bulk_action">
                             <thead>
-                                <tr class="headings" style="font-family: Work Sans,sans-serif;">
-                                    <th>
-                                        <input type="checkbox" id="check-all" }}>
-                                    </th>
+                                <tr class="headings">
+                                    <th>#</th>
                                     <th>Name</th>
+                                    <th>Password</th>
                                     <th>Status</th>
+                                    <th>Exp date</th>
                                     <th>Category</th>
-                                    <th>Input Codecs</th>
-                                    <th>Output Encoders</th>
-                                    <th>Uptime</th>
-                                    <th class=" no-link last"><span class="nobr">Control</span>
-                                    </th>
+                                    <th>File</th>
+                                    <th>Last viewed channel</th>
+                                    <th>Limit</th>
+                                    <th>IP</th>
+                                    <th>User agent</th>
+                                    <th class=" no-link last"><span class="nobr">Action</span></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($streams as $key => $stream)
+                            @foreach($users as $key => $user)
                                 <tr>
-                                    <td class="center"><input type="checkbox" class="tableflat check" value="{{ $stream->id }}" name="mselect[]"></td>
-                                    <td style="font-family: Work Sans,sans-serif;">
-                                        {{ strtoupper($stream->name) }}
-                                    </td>
-                                    <td class="center"><span class="label label-{{ $stream->status_label['label'] }}"><i class="{{ $stream->status_label['icon'] }}"></i> {{ $stream->status_label['text'] }}</span>
-                                        @if($stream->checker == 0)
-                                        <span class="label label-info"><i class="fas fa-check-circle"></i> Primary URL</span>
+                                    <td class="center">{{ $key+1 }}</td>
+                                    <td style="font-weight: bold;">{{ $user->username }}</td>
+                                    <td class="center"><div title="{{ $user->password }}"><span class="label label-default"><i class="fas fa-mouse-pointer"></i> hover me <i class="fas fa-key"></i></div></span></td>
+                                    <td class="center">
+                                        @if($user->active)
+                                            <span class="label label-success">Active</span>
+                                        @else
+                                            <span class="label label-important">Not Active</span>
                                         @endif
-                                        @if($stream->checker == 2)
-                                        <span class="label label-info"><i class="fas fa-exclamation-circle"></i> >Backup URL 1</span>
-                                        @endif
-                                        @if($stream->checker == 3)
-                                        <span class="label label-info"><i class="fas fa-exclamation-circle"></i> Backup URL 2</span>
-                                        @endif
-                                    </td>
-                                    <td class="center"><a color="purple" class="label label-default">{{ $stream->category ? $stream->category->name : '' }} </a></td>
-                                    <td style="font-family: monospace;" class="center">
-
-                                        <a class="label label-default">
-                                            <i class="fas fa-video"></i>
-                                            @if($stream->video_codec_name)
-                                            {{ strtoupper($stream->video_codec_name) }}
-                                            @else
-                                            'N/A'
-                                            @endif
-                                            <i class="fas fa-long-arrow-alt-down"></i>
-                                            <i class="fas fa-volume-up"></i>
-                                            @if($stream->audio_codec_name)
-                                            {{ strtoupper($stream->audio_codec_name) }}
-                                            @else
-                                            'N/A'
-                                            @endif
-                                        </a>
-                                    </td>
-                                    <td class="center" style="font-family: monospace;">
-
-                                        <a class="label label-default">
-                                            <i class="fas fa-video"></i>
-                                            @if(($stream->transcode)->video_codec)
-                                            {{ strtoupper(($stream->transcode)->video_codec) }}
-                                            @else
-                                            COPY
-                                            @endif
-                                            <i class="fas fa-long-arrow-alt-up"></i>
-                                            <i class="fas fa-volume-up"></i>
-                                            @if(($stream->transcode)->audio_codec)
-                                            {{ strtoupper(($stream->transcode)->audio_codec) }}
-                                            @else
-                                            COPY
-                                            @endif
-                                        </a>
                                     </td>
                                     <td class="center">
-                                        @if($stream->duration > 0)
-                                        @if($stream->status_label["text"] == "RUNNING")
-                                        <a style="color: DarkGreen;"><i class="fa fa-clock fa-xs"></i></a><a> {{ secondsToTime($stream->duration) }} </> <a style="color: DarkGreen;"><i class="fas fa-wave-square fa-xs"></i></a> {{ $stream->fps }} fps
+                                        @if($user->exp_date != '0000-00-00')
+                                            @if($user->exp_date <=  Carbon\Carbon::today())
+                                                <span class="label label-important">{{ $user->exp_date }}</span>
                                             @else
-                                            <a style="color: DarkRed;"><i class="fas fa-exclamation-circle fa-xs"></i> {{ secondsToTime($stream->duration) }}</a>
+                                                <span class="label label-success">{{ $user->exp_date }}</span>
                                             @endif
-                                            @else
-                                            @if($stream->status_label["text"] == "RUNNING")
-                                            <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</a>
-                                            @else
-                                            <a style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></a>
-                                            @endif
-                                            @endif
+                                        @else
+                                            <span class="label label-success">Unlimited</span>
+                                        @endif
                                     </td>
+                                    <td class="center"><span class="label label-primary">{{ $user->category_names }}</span></td>
                                     <td class="center">
-                                        <a class="btn-success btn-sm" title="START STREAM" href="streams.php?start={{ $stream->id }}"><i class="fas fa-play"></i></a>
-                                        <a class="btn-danger btn-sm" title="STOP STREAM" href="streams.php?stop={{ $stream->id }}"><i class="fas fa-stop"></i></a>
-                                        <a class="btn-warning btn-sm" title="RESTART STREAM" href="streams.php?restart={{ $stream->id }}"><i class="fas fa-redo-alt"></i></a>
-                                        <a class="btn-info btn-sm" href="manage_stream.php?id={{ $stream->id }}" title="Edit"><i class="far fa-edit"></i></a>
-                                        <a class="btn-danger btn-sm" href="streams.php?delete={{ $stream->id }}" title="Delete" onclick="return confirm('Delete {{ $stream->name }} ?')"><i class="far fa-trash-alt"></i></a>
+                                        <a href="getfile.php?m3u_hls=true&id={{ $user->id }}" title="GET HLS M3U8"><span class="label label-success">M3U8 HLS</span></a>
+                                        <a href="getfile.php?m3u_mpegts=true&id={{ $user->id }}" title="GET MPEGTS M3U8"><span class="label label-success">M3U8 MPEGTS</span></a>
+                                        <a href="getfile.php?e2=true&id={{ $user->id }}" title="GET E2"><span class="label label-success">E2</span></a>
+                                        <a href="getfile.php?tv=true&id={{ $user->id }}" title="GET TV"><span class="label label-success">TV</span></a>
+                                        <a href="clientsgen.php?id={{ $user->id }}" title="Clients"><span class="label label-success">Clients</span></a>
+                                        <a href="javascript:;" data-toggle="modal" data-target="#autoenigma2"><span class="label label-success">Auto Enigma2</span></a>
                                     </td>
-                                    @endforeach
+                                    <td class="center"> @if($user->laststream) {{ strtoupper($user->laststream->name) }} @else Never connected @endif </td>
+                                    <td class="center">{{ $user->max_connections }}</td>
+
+
+                                    <td class="center"> @if($user->lastconnected_ip) {{ $user->lastconnected_ip }} @else Never connected @endif </td>
+                                    <td class="center"> @if($user->useragent) {{ $user->useragent }} @else Never connected @endif </td>
+                                    <td class="center">
+                                        <a class="btn btn-info btn-sm" href="manage_user.php?id={{ $user->id }}" title="Edit">Edit</a>
+                                        <a class="btn btn-danger btn-sm" href="users.php?delete={{ $user->id }}" title="Delete" onclick="return confirm('Are you sure?')">Remove</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
-                        @else
+                    @else
                         <div class="alert alert-info">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            No streams found
+                            <button type="button" class="close" data-dismiss="alert">Ã—</button>
+                            No users found
                         </div>
-                        @endif
-                </form>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-    @endsection
-    @section('js')
-    <!-- Datatables -->
-    <script src="js/datatables/js/jquery.dataTables.js"></script>
-    <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-    </script>
-    <script>
-        var asInitVals = new Array();
-        $(document).ready(function() {
-            var oTable = $('#example').dataTable({
-                "oLanguage": {
-                    "sSearch": "Search all columns:"
-                },
-                "aoColumnDefs": [{
-                        'bSortable': false,
-                        'aTargets': [0]
-                    } //disables sorting for column one
-                ],
-                'iDisplayLength': 30,
-                "sPaginationType": "full_numbers"
-            });
-            setInterval(function() {
-                oTable.rows().invalidate().draw();
-            }, 5000);
-            $("tfoot input").keyup(function() {
-                /* Filter on the column based on the index of this element's parent <th> */
-                oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
-            });
-            $("tfoot input").each(function(i) {
-                asInitVals[i] = this.value;
-            });
-            $("tfoot input").focus(function() {
-                if (this.className == "search_init") {
-                    this.className = "";
-                    this.value = "";
-                }
-            });
-            $("tfoot input").blur(function(i) {
-                if (this.value == "") {
-                    this.className = "search_init";
-                    this.value = asInitVals[$("tfoot input").index(this)];
-                }
-            });
-        });
-        $('table input').on('ifChecked', function() {
-            check_state = '';
-            $(this).parent().parent().parent().addClass('selected');
-            countChecked();
-        });
-        $('table input').on('ifUnchecked', function() {
-            check_state = '';
-            $(this).parent().parent().parent().removeClass('selected');
-            countChecked();
-        });
-        var check_state = '';
-        $('.bulk_action input').on('ifChecked', function() {
-            check_state = '';
-            $(this).parent().parent().parent().addClass('selected');
-            countChecked();
-        });
-        $('.bulk_action input').on('ifUnchecked', function() {
-            check_state = '';
-            $(this).parent().parent().parent().removeClass('selected');
-            countChecked();
-        });
-        $('.bulk_action input#check-all').on('ifChecked', function() {
-            check_state = 'check_all';
-            countChecked();
-        });
-        $('.bulk_action input#check-all').on('ifUnchecked', function() {
-            check_state = 'uncheck_all';
-            countChecked();
-        });
+    <!-- Modal -->
+    <div class="modal fade" id="autoenigma2" role="dialog">
+        <div class="modal-dialog">
 
-        function countChecked() {
-            if (check_state == 'check_all') {
-                $(".bulk_action input[name='mselect[]']").iCheck('check');
-            }
-            if (check_state == 'uncheck_all') {
-                $(".bulk_action input[name='mselect[]']").iCheck('uncheck');
-            }
-            var n = $(".bulk_action input[name='mselect[]']:checked").length;
-            if (n > 0) {
-                $('.column-title').hide();
-                $('.bulk-actions').show();
-                $('.action-cnt').html(n + ' Records Selected');
-            } else {
-                $('.column-title').show();
-                $('.bulk-actions').hide();
-            }
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">automatic enigma2 oe2</h4>
+                </div>
+                <div class="modal-body">
+                    <p><textarea name="" id="" class="col-md-12" rows="3">wget -O /etc/enigma2/iptv.sh "http://{{ $setting->webip }}:{{ $setting->webport }}/retrieve.php?username={{ $user->username }}&password={{ $user->password }}&type=auto_enigma2_oe2&output=mpegts" && chmod 777 /etc/enigma2/iptv.sh && /etc/enigma2/iptv.sh</textarea></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@endsection
+@section('js')
+<script src="js/datatables/js/jquery.dataTables.js"></script>
+<script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
+<script>
+
+
+$(document).ready(function () {
+    $('input.tableflat').iCheck({
+        checkboxClass: 'icheckbox_flat-green',
+        radioClass: 'iradio_flat-green'
+    });
+});
+
+var asInitVals = new Array();
+$(document).ready(function () {
+    var oTable = $('#example').dataTable({
+        "oLanguage": {
+            "sSearch": "Search all columns:"
+        },
+        "aoColumnDefs": [
+            {
+                'bSortable': false,
+                'aTargets': [0]
+            } //disables sorting for column one
+        ],
+        'iDisplayLength': 50,
+        "sPaginationType": "full_numbers"
+    });
+    $("tfoot input").keyup(function () {
+        /* Filter on the column based on the index of this element's parent <th> */
+        oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+    });
+    $("tfoot input").each(function (i) {
+        asInitVals[i] = this.value;
+    });
+    $("tfoot input").focus(function () {
+        if (this.className == "search_init") {
+            this.className = "";
+            this.value = "";
         }
-    </script>
-    @endsection
+    });
+    $("tfoot input").blur(function (i) {
+        if (this.value == "") {
+            this.className = "search_init";
+            this.value = asInitVals[$("tfoot input").index(this)];
+        }
+    });
+});
+</script>
+@endsection
