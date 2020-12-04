@@ -113,7 +113,7 @@ streamtool ALL=NOPASSWD: /opt/streamtool/app/nginx/sbin/nginx_streamtool' >>/etc
 
   cp /opt/streamtool/install/files/streamtool*.service /etc/systemd/system/.
   systemctl daemon-reload
-  systemctl enable streamtool streamtool-webserver streamtool-fpm
+  systemctl enable streamtool streamtool-webserver streamtool-fpm streamtool-watcher streamtool-stats
   echo "$(
     date +%s | sha256sum | base64 | head -c 32
     echo
