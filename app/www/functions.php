@@ -74,7 +74,7 @@ function csv_to_array($filename = '', $delimiter = ',')
 function patchnv()
 {
     copy('https://raw.githubusercontent.com/keylase/nvidia-patch/master/patch.sh', '/tmp/patch.sh');
-    $patchresult = shell_exec('/usr/bin/sudo /tmp/patch.sh');
+    $patchresult = shell_exec('chmod +x /tmp/patch.sh; /usr/bin/sudo /tmp/patch.sh');
     return $patchresult;
 }
 
@@ -139,7 +139,8 @@ function getTranscode($id, $streamnumber = null)
             }
         }
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
-        $ffmpeg .= ' -strict -2 -dn -map v -map a';
+	$ffmpeg .= $trans->logo ? ' -i ' . '"' . "$trans->logo_path" . '"';
+        $ffmpeg .= ' -strict -2 -dn -map v -map a -map s';
         $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
         $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
         $ffmpeg .= $trans->video_codec ? ' -vcodec ' . $trans->video_codec : '';
@@ -158,6 +159,7 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
         $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
         $ffmpeg .= $trans->deinterlance ? ($nvencpos ? ' -vf yadif_cuda' : ' -vf yadif') : '';
+	$ffmpeg .= $trans->logo ? ($nvencpos ? ' -filter_complex "[1:v]format=nv12,hwupload[img];[0:v][img]overlay_cuda=x=0:y=0"' : ' -filter_complex "overlay=0:0"') : '';
         $ffmpeg .= $endofffmpeg;
         file_put_contents('/tmp/streamtool-ffmpeg_' . $id . '.log', $ffmpeg . PHP_EOL , FILE_APPEND);
         return $ffmpeg;
@@ -166,7 +168,7 @@ function getTranscode($id, $streamnumber = null)
     $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1  -reconnect_delay_max 2 -err_detect ignore_err';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
     $ffmpeg .= ' -i "' . $url . '"';
-    $ffmpeg .= ' -map v -map a -c:v copy -c:a copy';
+    $ffmpeg .= ' -map v -map a -map v -c:v copy -c:a copy -c:s copy';
     $ffmpeg .= $endofffmpeg;
     return $ffmpeg;
 }

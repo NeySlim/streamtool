@@ -171,6 +171,10 @@ if (isset($_GET['install'])) {
             $table->integer('crf')->default('0');
             $table->integer('threads')->default('0');
             $table->tinyInteger('deinterlance')->default(0);
+            $table->tinyInteger('logo')->default(0);
+            $table->string('logo_path')->default('');
+            $table->tinyInteger('burn_sub')->default(0);
+            $table->tinyInteger('burn_sub_num')->default(0);
             $table->timestamps();
         });
 
@@ -290,6 +294,13 @@ if (isset($_GET['update'])) {
     });
     $db->schema()->table('settings', function ($table) use ($db) {
         $db->schema()->hasColumn('settings', 'server_name') ? '' : $table->string('server_name')->default('Streamtool');
+    });
+    $db->schema()->table('transcodes', function ($table) use ($db) {
+        $db->schema()->hasColumn('transcodes', 'logo') ? '' : $table->tinyInteger('logo')->default(0);
+        $db->schema()->hasColumn('transcodes', 'logo_path') ? '' : $table->string('logo_path')->default('');
+        $db->schema()->hasColumn('transcodes', 'burn_sub') ? '' : $table->tinyInteger('burn_sub')->default(0);
+        $db->schema()->hasColumn('transcodes', 'burn_sub_num') ? '' : $table->integer('burn_sub_num')->default(0);
+        
     });
     echo "update <br>" . PHP_EOL;
 }
