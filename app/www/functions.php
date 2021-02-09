@@ -168,7 +168,7 @@ function getTranscode($id, $streamnumber = null)
         }
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
         $ffmpeg .= $trans->logo ? ' -i ' . '"' . $trans->logo_path . '"' : '';
-        $ffmpeg .= ' -strict -2 -dn -map v? -map a? -map s?';
+        $ffmpeg .= ' -strict -2 -dn -map v? -map a? -map s? -scodec copy';
         $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
         $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
         $ffmpeg .= $trans->video_codec ? ' -vcodec ' . $trans->video_codec : '';
