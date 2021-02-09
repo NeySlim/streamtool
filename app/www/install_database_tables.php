@@ -300,7 +300,6 @@ if (isset($_GET['update'])) {
         $db->schema()->hasColumn('transcodes', 'logo_path') ? '' : $table->string('logo_path')->default('');
         $db->schema()->hasColumn('transcodes', 'burn_sub') ? '' : $table->tinyInteger('burn_sub')->default(0);
         $db->schema()->hasColumn('transcodes', 'burn_sub_num') ? '' : $table->integer('burn_sub_num')->default(0);
-        
-    });
+            });
     echo "update <br>" . PHP_EOL;
 }

@@ -117,7 +117,7 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg = "";
     $endofffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
     // $endofffmpeg .= ' -hls_flags delete_segments -hls_time 4 -hls_list_size 8 -hls_allow_cache 1 -hls_delete_threshold 10 -hls_segment_type mpegts';
-    $endofffmpeg .= ' -f segment -segment_format mpegts -segment_time 10 -segment_list_size 6 -segment_format_options mpegts_flags=+initial_discontinuity:mpegts_copyts=1 -segment_list_type m3u8 -segment_list_flags +live+delete'; 
+    $endofffmpeg .= ' -f segment -segment_format mpegts -segment_time 6 -segment_list_size 5 -segment_format_options mpegts_flags=+initial_discontinuity:mpegts_copyts=1 -segment_list_type m3u8 -segment_list_flags +live+delete'; 
     $endofffmpeg .= ' -segment_list /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%d.ts';
     //$endofffmpeg .= ' -hls_segment_filename /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%03d.ts  /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 ';
     if ($trans) {
@@ -137,9 +137,37 @@ function getTranscode($id, $streamnumber = null)
                 $ffmpeg .= ' -c:v hevc_cuvid';
                 $nvencpos = 1;
             }
+            if (strpos($stream->video_codec_name, 'mpeg') !== false) {
+                $ffmpeg .= ' -c:v mpeg_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'mpeg2') !== false) {
+                $ffmpeg .= ' -c:v mpeg2_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'mjpeg') !== false) {
+                $ffmpeg .= ' -c:v mjpeg_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'av1') !== false) {
+                $ffmpeg .= ' -c:v av1_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'vc1') !== false) {
+                $ffmpeg .= ' -c:v vc1_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'vp8') !== false) {
+                $ffmpeg .= ' -c:v vp8_cuvid';
+                $nvencpos = 1;
+            }
+            if (strpos($stream->video_codec_name, 'vp9') !== false) {
+                $ffmpeg .= ' -c:v vp9_cuvid';
+                $nvencpos = 1;
+            }
         }
         $ffmpeg .= ' -i ' . '"' . "$url" . '"';
-	$ffmpeg .= $trans->logo ? ' -i ' . '"' . "$trans->logo_path" . '"';
+        $ffmpeg .= $trans->logo ? ' -i ' . '"' . $trans->logo_path . '"' : '';
         $ffmpeg .= ' -strict -2 -dn -map v -map a -map s';
         $ffmpeg .= $trans->scale ? ' -vf scale=' . ($trans->scale ? $trans->scale : '') : '';
         $ffmpeg .= $trans->audio_codec ? ' -acodec ' . $trans->audio_codec : '';
@@ -159,7 +187,7 @@ function getTranscode($id, $streamnumber = null)
         $ffmpeg .= $stream->bitstreamfilter ? ' -bsf h264_mp4toannexb' : '';
         $ffmpeg .= $trans->threads ? ' -threads ' . $trans->threads : '';
         $ffmpeg .= $trans->deinterlance ? ($nvencpos ? ' -vf yadif_cuda' : ' -vf yadif') : '';
-	$ffmpeg .= $trans->logo ? ($nvencpos ? ' -filter_complex "[1:v]format=nv12,hwupload[img];[0:v][img]overlay_cuda=x=0:y=0"' : ' -filter_complex "overlay=0:0"') : '';
+        $ffmpeg .= $trans->logo ? ($nvencpos ? ' -filter_complex "[1:v]format=nv12,hwupload[img];[0:v][img]overlay_cuda=x=0:y=0"' : ' -filter_complex "overlay=0:0"') : '';
         $ffmpeg .= $endofffmpeg;
         file_put_contents('/tmp/streamtool-ffmpeg_' . $id . '.log', $ffmpeg . PHP_EOL , FILE_APPEND);
         return $ffmpeg;
@@ -168,7 +196,7 @@ function getTranscode($id, $streamnumber = null)
     $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1  -reconnect_delay_max 2 -err_detect ignore_err';
     $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
     $ffmpeg .= ' -i "' . $url . '"';
-    $ffmpeg .= ' -map v -map a -map v -c:v copy -c:a copy -c:s copy';
+    $ffmpeg .= ' -map v -map a -c:v copy -c:a copy';
     $ffmpeg .= $endofffmpeg;
     return $ffmpeg;
 }

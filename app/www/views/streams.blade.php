@@ -110,7 +110,7 @@
                                         @endif
                                         @else
                                         @if($stream->status_label["text"] == "RUNNING")
-                                        <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> starting</a>
+                                        <a style="color: DarkGreen;"><i class="fas fa-spinner fa-spin fa-xs"></i> analyzing</a>
                                         @else
                                         <a style="color: DarkSlateGray;"><i class="fas fa-stop-circle fa-xs"></i></i></a>
                                         @endif
