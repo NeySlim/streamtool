@@ -178,8 +178,8 @@ if (isset($_GET['install'])) {
         
         $profile1 = new Transcode();
         $profile1->name = 'Default: HLS remux';
-        $profile1->probesize = 10000000;
-        $profile1->analyzeduration = 10000000;
+        $profile1->probesize = 1000000;
+        $profile1->analyzeduration = 1000000;
         $profile1->video_codec = 'copy';
         $profile1->audio_codec = 'copy';
         $profile1->save();
@@ -187,8 +187,8 @@ if (isset($_GET['install'])) {
         
         $profile2 = new Transcode();
         $profile2->name = 'AAC: Video Copy, AAC Audio';
-        $profile2->probesize = 10000000;
-        $profile2->analyzeduration = 10000000;
+        $profile2->probesize = 1000000;
+        $profile2->analyzeduration = 1000000;
         $profile2->video_codec = 'copy';
         $profile2->audio_codec = 'aac';
         $profile2->save();
@@ -196,8 +196,8 @@ if (isset($_GET['install'])) {
 
         $profile3 = new Transcode();
         $profile3->name = 'NVENC H264 - AAC - 4Mb/s';
-        $profile3->probesize = 10000000;
-        $profile3->analyzeduration = 10000000;
+        $profile3->probesize = 1000000;
+        $profile3->analyzeduration = 1000000;
         $profile3->video_codec = 'h264_nvenc';
         $profile3->audio_codec = 'aac';
         $profile3->profile = 'high -level 4.2';
@@ -208,8 +208,8 @@ if (isset($_GET['install'])) {
 
         $profile4 = new Transcode();
         $profile4->name = 'CPU H264 - AAC - 4Mb/s';
-        $profile4->probesize = 10000000;
-        $profile4->analyzeduration = 10000000;
+        $profile4->probesize = 1000000;
+        $profile4->analyzeduration = 1000000;
         $profile4->video_codec = 'h264';
         $profile4->audio_codec = 'copy';
         $profile4->profile = 'main -level 4.0';
@@ -220,9 +220,9 @@ if (isset($_GET['install'])) {
 
         $profile5 = new Transcode();
         $profile5->name = 'NVENC HEVC - AAC - 2.8Mb/s';
-        $profile5->probesize = 10000000;
-        $profile5->analyzeduration = 10000000;
-        $profile5->video_codec = 'h264_nvenc';
+        $profile5->probesize = 1000000;
+        $profile5->analyzeduration = 1000000;
+        $profile5->video_codec = 'hevc_nvenc';
         $profile5->audio_codec = 'aac';
         $profile5->profile = 'high -level 4.1';
         $profile5->preset_values = 'llhq';
