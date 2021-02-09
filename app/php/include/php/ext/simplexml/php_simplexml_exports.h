@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -31,7 +33,7 @@
 		__n = (__s)->node->node; \
 	} else { \
 		__n = NULL; \
-		zend_throw_error(NULL, "SimpleXMLElement is not properly initialized"); \
+		php_error_docref(NULL, E_WARNING, "Node no longer exists"); \
 	} \
 }
 

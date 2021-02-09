@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -53,10 +55,23 @@
 #define HAVE_FULL_DNS_FUNCS 1
 #endif
 
+PHP_FUNCTION(gethostbyaddr);
+PHP_FUNCTION(gethostbyname);
+PHP_FUNCTION(gethostbynamel);
+
+#ifdef HAVE_GETHOSTNAME
+PHP_FUNCTION(gethostname);
+#endif
+
 #if defined(PHP_WIN32) || HAVE_DNS_SEARCH_FUNC
+PHP_FUNCTION(dns_check_record);
+
 # if defined(PHP_WIN32) || HAVE_FULL_DNS_FUNCS
+PHP_FUNCTION(dns_get_mx);
+PHP_FUNCTION(dns_get_record);
 PHP_MINIT_FUNCTION(dns);
 # endif
+
 #endif /* defined(PHP_WIN32) || HAVE_DNS_SEARCH_FUNC */
 
 #ifndef INT16SZ

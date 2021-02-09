@@ -158,6 +158,7 @@ MBFLAPI extern enum mbfl_no_encoding mbfl_name2no_encoding(const char *name);
 MBFLAPI extern const mbfl_encoding ** mbfl_get_supported_encodings();
 MBFLAPI extern const char * mbfl_no_encoding2name(enum mbfl_no_encoding no_encoding);
 MBFLAPI extern const char * mbfl_no2preferred_mime_name(enum mbfl_no_encoding no_encoding);
+MBFLAPI extern int mbfl_is_support_encoding(const char *name);
 
 
 #endif /* MBFL_ENCODING_H */

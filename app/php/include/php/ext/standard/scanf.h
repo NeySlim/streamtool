@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -28,7 +30,10 @@
 									/* can be caused by bad parameters or format*/
 									/* string.									*/
 #define SCAN_ERROR_INVALID_FORMAT		(SCAN_ERROR_EOF - 1)
-#define SCAN_ERROR_WRONG_PARAM_COUNT	(SCAN_ERROR_INVALID_FORMAT - 1)
+#define SCAN_ERROR_VAR_PASSED_BYVAL		(SCAN_ERROR_INVALID_FORMAT - 1)
+#define SCAN_ERROR_WRONG_PARAM_COUNT	(SCAN_ERROR_VAR_PASSED_BYVAL - 1)
+#define SCAN_ERROR_INTERNAL             (SCAN_ERROR_WRONG_PARAM_COUNT - 1)
+
 
 /*
  * The following are here solely for the benefit of the scanf type functions

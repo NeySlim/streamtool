@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -40,7 +42,7 @@ typedef struct _php_json_scanner {
 } php_json_scanner;
 
 
-void php_json_scanner_init(php_json_scanner *scanner, const char *str, size_t str_len, int options);
+void php_json_scanner_init(php_json_scanner *scanner, char *str, size_t str_len, int options);
 int php_json_scan(php_json_scanner *s);
 
 #endif	/* PHP_JSON_SCANNER_H */

@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -27,7 +29,6 @@
 #define spl_ce_ArrayAccess   zend_ce_arrayaccess
 #define spl_ce_Serializable  zend_ce_serializable
 #define spl_ce_Countable     zend_ce_countable
-#define spl_ce_Stringable    zend_ce_stringable
 
 extern PHPAPI zend_class_entry *spl_ce_RecursiveIterator;
 extern PHPAPI zend_class_entry *spl_ce_RecursiveIteratorIterator;

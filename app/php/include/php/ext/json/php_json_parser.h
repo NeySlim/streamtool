@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -61,7 +63,7 @@ struct _php_json_parser {
 PHP_JSON_API void php_json_parser_init_ex(
 		php_json_parser *parser,
 		zval *return_value,
-		const char *str,
+		char *str,
 		size_t str_len,
 		int options,
 		int max_depth,
@@ -70,7 +72,7 @@ PHP_JSON_API void php_json_parser_init_ex(
 PHP_JSON_API void php_json_parser_init(
 		php_json_parser *parser,
 		zval *return_value,
-		const char *str,
+		char *str,
 		size_t str_len,
 		int options,
 		int max_depth);

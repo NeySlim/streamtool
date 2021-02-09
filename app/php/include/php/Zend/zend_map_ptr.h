@@ -46,11 +46,6 @@
 # define ZEND_MAP_PTR_NEW(ptr) do { \
 		ZEND_MAP_PTR(ptr) = zend_map_ptr_new(); \
 	} while (0)
-# define ZEND_MAP_PTR_REAL_BASE(base) \
-	(base)
-# define ZEND_MAP_PTR_SET_REAL_BASE(base, ptr) do { \
-		base = (ptr); \
-	} while (0)
 #elif ZEND_MAP_PTR_KIND == ZEND_MAP_PTR_KIND_PTR_OR_OFFSET
 # define ZEND_MAP_PTR(ptr) \
 	ptr ## __ptr
@@ -59,30 +54,25 @@
 # define ZEND_MAP_PTR_IS_OFFSET(ptr) \
 	(((uintptr_t)ZEND_MAP_PTR(ptr)) & 1L)
 # define ZEND_MAP_PTR_OFFSET2PTR(ptr) \
-	((void**)((char*)CG(map_ptr_base) + (uintptr_t)ZEND_MAP_PTR(ptr)))
+	((void**)((char*)CG(map_ptr_base) + (uintptr_t)ZEND_MAP_PTR(ptr) - 1))
 # define ZEND_MAP_PTR_PTR2OFFSET(ptr) \
-	((void*)(((char*)(ptr)) - ((char*)CG(map_ptr_base))))
+	((void*)((uintptr_t)(((char*)(ptr)) - ((char*)CG(map_ptr_base))) | 1L))
 # define ZEND_MAP_PTR_GET(ptr) \
-	(*(ZEND_MAP_PTR_IS_OFFSET(ptr) ? \
-		ZEND_MAP_PTR_OFFSET2PTR(ptr) : \
-		((void**)(ZEND_MAP_PTR(ptr)))))
+	(ZEND_MAP_PTR_IS_OFFSET(ptr) ? \
+		*(ZEND_MAP_PTR_OFFSET2PTR(ptr)) : \
+		(void*)(*(ZEND_MAP_PTR(ptr))))
 # define ZEND_MAP_PTR_SET(ptr, val) do { \
-		void **__p = (void**)(ZEND_MAP_PTR(ptr)); \
 		if (ZEND_MAP_PTR_IS_OFFSET(ptr)) { \
-			__p = ZEND_MAP_PTR_OFFSET2PTR(ptr); \
+			*(ZEND_MAP_PTR_OFFSET2PTR(ptr)) = (val); \
+		} else { \
+			*(ZEND_MAP_PTR(ptr)) = (val); \
 		} \
-		*__p = (val); \
 	} while (0)
 # define ZEND_MAP_PTR_INIT(ptr, val) do { \
 		ZEND_MAP_PTR(ptr) = (val); \
 	} while (0)
 # define ZEND_MAP_PTR_NEW(ptr) do { \
 		ZEND_MAP_PTR(ptr) = zend_map_ptr_new(); \
-	} while (0)
-# define ZEND_MAP_PTR_REAL_BASE(base) \
-	((void*)(((uintptr_t)(base)) + 1))
-# define ZEND_MAP_PTR_SET_REAL_BASE(base, ptr) do { \
-		base = (void*)(((uintptr_t)(ptr)) - 1); \
 	} while (0)
 #else
 # error "Unknown ZEND_MAP_PTR_KIND"

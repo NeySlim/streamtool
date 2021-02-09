@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -23,5 +25,7 @@
 
 #include "php_network.h"
 
+PHP_FUNCTION(fsockopen);
+PHP_FUNCTION(pfsockopen);
 
 #endif /* FSOCK_H */

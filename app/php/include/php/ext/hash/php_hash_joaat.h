@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -20,7 +22,6 @@
 typedef struct {
 	uint32_t state;
 } PHP_JOAAT_CTX;
-#define PHP_JOAAT_SPEC "l."
 
 PHP_HASH_API void PHP_JOAATInit(PHP_JOAAT_CTX *context);
 PHP_HASH_API void PHP_JOAATUpdate(PHP_JOAAT_CTX *context, const unsigned char *input, size_t inputLen);

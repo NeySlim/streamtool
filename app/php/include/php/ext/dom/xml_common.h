@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -81,8 +83,11 @@ PHP_DOM_EXPORT xmlNodePtr dom_object_get_node(dom_object *obj);
 #define DOM_RET_OBJ(obj, ret, domobject) \
 	*ret = php_dom_create_object(obj, return_value, domobject)
 
+#define DOM_GET_THIS(zval) \
+	do { zval = ZEND_THIS; } while (0)
+
 #define DOM_GET_THIS_OBJ(__ptr, __id, __prtype, __intern) \
-	__id = ZEND_THIS; \
+	DOM_GET_THIS(__id); \
 	DOM_GET_OBJ(__ptr, __id, __prtype, __intern);
 
 #endif

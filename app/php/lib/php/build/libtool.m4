@@ -945,7 +945,6 @@ else
 #endif
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #ifdef RTLD_GLOBAL
 #  define LT_DLGLOBAL		RTLD_GLOBAL
@@ -979,6 +978,10 @@ else
 #  endif
 #endif
 
+#ifdef __cplusplus
+extern "C" void exit (int);
+#endif
+
 void fnord() { int i=42;}
 int main ()
 {
@@ -994,7 +997,7 @@ int main ()
   else
     puts (dlerror ());
 
-    return (status);
+    exit (status);
 }]
 EOF
   if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext} 2>/dev/null; then

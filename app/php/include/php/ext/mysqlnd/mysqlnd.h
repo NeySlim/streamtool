@@ -1,5 +1,7 @@
 /*
   +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
   | Copyright (c) The PHP Group                                          |
   +----------------------------------------------------------------------+
   | This source file is subject to version 3.01 of the PHP license,      |
@@ -36,7 +38,7 @@
   on production systems, if of course measured performance degradation is not
   minimal.
 */
-#if defined(A0) && PHP_DEBUG
+#if A0 && PHP_DEBUG
 #define MYSQLND_DO_WIRE_CHECK_BEFORE_COMMAND 1
 #endif
 
@@ -44,6 +46,10 @@
 #define MYSQLND_DBG_ENABLED 1
 #else
 #define MYSQLND_DBG_ENABLED 0
+#endif
+
+#if defined(MYSQLND_COMPRESSION_WANTED)
+#define MYSQLND_COMPRESSION_ENABLED 1
 #endif
 
 #ifdef ZTS
@@ -60,9 +66,9 @@
 PHPAPI void mysqlnd_library_init(void);
 PHPAPI void mysqlnd_library_end(void);
 
-PHPAPI unsigned int mysqlnd_plugin_register(void);
+PHPAPI unsigned int mysqlnd_plugin_register();
 PHPAPI unsigned int mysqlnd_plugin_register_ex(struct st_mysqlnd_plugin_header * plugin);
-PHPAPI unsigned int mysqlnd_plugin_count(void);
+PHPAPI unsigned int mysqlnd_plugin_count();
 PHPAPI void * mysqlnd_plugin_find(const char * const name);
 
 PHPAPI void mysqlnd_plugin_apply_with_argument(apply_func_arg_t apply_func, void * argument);
@@ -155,8 +161,8 @@ PHPAPI enum_func_status mysqlnd_poll(MYSQLND **r_array, MYSQLND **e_array, MYSQL
 #define mysqlnd_fetch_fields(result)			(result)->m.fetch_fields((result))
 
 /* mysqlnd metadata */
-PHPAPI const char *	mysqlnd_get_client_info(void);
-PHPAPI unsigned long mysqlnd_get_client_version(void);
+PHPAPI const char *	mysqlnd_get_client_info();
+PHPAPI unsigned long mysqlnd_get_client_version();
 
 #define mysqlnd_ssl_set(conn, key, cert, ca, capath, cipher) ((conn)->data)->m->ssl_set((conn)->data, (key), (cert), (ca), (capath), (cipher))
 

@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -22,5 +24,7 @@ PHP_MSHUTDOWN_FUNCTION(assert);
 PHP_RINIT_FUNCTION(assert);
 PHP_RSHUTDOWN_FUNCTION(assert);
 PHP_MINFO_FUNCTION(assert);
+PHP_FUNCTION(assert);
+PHP_FUNCTION(assert_options);
 
 #endif /* PHP_ASSERT_H */

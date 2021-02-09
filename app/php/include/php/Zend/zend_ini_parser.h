@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,25 +33,17 @@
 #ifndef YY_INI_ZEND_ZEND_INI_PARSER_H_INCLUDED
 # define YY_INI_ZEND_ZEND_INI_PARSER_H_INCLUDED
 /* Debug traces.  */
-#ifndef INI_DEBUG
-# if defined YYDEBUG
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
 #if YYDEBUG
-#   define INI_DEBUG 1
-#  else
-#   define INI_DEBUG 0
-#  endif
-# else /* ! defined YYDEBUG */
-#  define INI_DEBUG 0
-# endif /* ! defined YYDEBUG */
-#endif  /* ! defined INI_DEBUG */
-#if INI_DEBUG
 extern int ini_debug;
 #endif
 
 /* Token type.  */
-#ifndef INI_TOKENTYPE
-# define INI_TOKENTYPE
-  enum ini_tokentype
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
   {
     END = 0,
     TC_SECTION = 258,
@@ -73,10 +65,10 @@ extern int ini_debug;
 #endif
 
 /* Value type.  */
-#if ! defined INI_STYPE && ! defined INI_STYPE_IS_DECLARED
-typedef zval INI_STYPE;
-# define INI_STYPE_IS_TRIVIAL 1
-# define INI_STYPE_IS_DECLARED 1
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
 
 

@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -258,13 +260,13 @@ END_EXTERN_C()
 #define php_stream_from_zval(xstr, pzval)	do { \
 	if (((xstr) = (php_stream*)zend_fetch_resource2_ex((pzval), \
 				"stream", php_file_le_stream(), php_file_le_pstream())) == NULL) { \
-		return; \
+		RETURN_FALSE; \
 	} \
 } while (0)
 #define php_stream_from_res(xstr, res)	do { \
 	if (((xstr) = (php_stream*)zend_fetch_resource2((res), \
 			   	"stream", php_file_le_stream(), php_file_le_pstream())) == NULL) { \
-		return; \
+		RETURN_FALSE; \
 	} \
 } while (0)
 #define php_stream_from_res_no_verify(xstr, pzval)	(xstr) = (php_stream*)zend_fetch_resource2((res), "stream", php_file_le_stream(), php_file_le_pstream())

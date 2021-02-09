@@ -1,5 +1,7 @@
 /*
    +----------------------------------------------------------------------+
+   | PHP Version 7                                                        |
+   +----------------------------------------------------------------------+
    | Copyright (c) The PHP Group                                          |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
@@ -17,6 +19,12 @@
 
 #ifndef PHP_IMAGE_H
 #define PHP_IMAGE_H
+
+PHP_FUNCTION(getimagesize);
+PHP_FUNCTION(getimagesizefromstring);
+
+PHP_FUNCTION(image_type_to_mime_type);
+PHP_FUNCTION(image_type_to_extension);
 
 /* {{{ enum image_filetype
    This enum is used to have ext/standard/image.c and ext/exif/exif.c use
@@ -50,7 +58,7 @@ typedef enum
 
 PHP_MINIT_FUNCTION(imagetypes);
 
-PHPAPI int php_getimagetype(php_stream *stream, const char *input, char *filetype);
+PHPAPI int php_getimagetype(php_stream *stream, char *filetype);
 
 PHPAPI char * php_image_type_to_mime_type(int image_type);
 
