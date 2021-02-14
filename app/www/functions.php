@@ -222,6 +222,34 @@ function getTranscodedata($id)
             $ffmpeg .= ' -c:v hevc_cuvid';
             $nvencpos = 1;
         }
+        if (strpos($stream->video_codec_name, 'mpeg') !== false) {
+            $ffmpeg .= ' -c:v mpeg_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'mpeg2') !== false) {
+            $ffmpeg .= ' -c:v mpeg2_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'mjpeg') !== false) {
+            $ffmpeg .= ' -c:v mjpeg_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'av1') !== false) {
+            $ffmpeg .= ' -c:v av1_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'vc1') !== false) {
+            $ffmpeg .= ' -c:v vc1_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'vp8') !== false) {
+            $ffmpeg .= ' -c:v vp8_cuvid';
+            $nvencpos = 1;
+        }
+        if (strpos($stream->video_codec_name, 'vp9') !== false) {
+            $ffmpeg .= ' -c:v vp9_cuvid';
+            $nvencpos = 1;
+        }
     }
     $ffmpeg .= ' -i ' . '"' . "[input]" . '"';
     $ffmpeg .= ' -strict -2 -dn ';
@@ -298,8 +326,7 @@ function start_stream($id)
                 $streaminfo = json_decode($checkstreamurl, true);
 
                 if ($streaminfo) {
-		     $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 2) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
-//                    $pid = shell_exec(getTranscode($stream->id, 2));
+		            $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 2) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
                     $stream->pid = $pid;
                     $stream->running = 1;
                     $stream->status = 1;
@@ -329,8 +356,8 @@ function start_stream($id)
                         $checkstreamurl = shell_exec('' . $setting->ffprobe_path . ' -analyzeduration 1000000 -probesize 1000000 -i "' . $stream->streamurl . '" -v  quiet -print_format json -show_streams 2>&1');
                         $streaminfo = json_decode($checkstreamurl, true);
                         if ($streaminfo) {
-                //            $pid = shell_exec(getTranscode($stream->id, 3));
-			     $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 3) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
+
+			                $pid = exec(sprintf("%s > %s 2>&1 & echo $!", getTranscode($stream->id, 3) , "/opt/streamtool/app/www/" . $setting->hlsfolder ."/" . $stream->id ."_.log"));
 
                             $stream->pid = $pid;
                             $stream->running = 1;
