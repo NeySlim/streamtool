@@ -120,9 +120,9 @@ function getTranscode($id, $streamnumber = null)
     $endofffmpeg .= ' -f segment -segment_format mpegts -segment_time 6 -segment_list_size 5 -segment_format_options mpegts_flags=+initial_discontinuity:mpegts_copyts=1 -segment_list_type m3u8 -segment_list_flags +live+delete'; 
     $endofffmpeg .= ' -segment_list /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%d.ts';
     //$endofffmpeg .= ' -hls_segment_filename /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_%03d.ts  /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.m3u8 ';
+    $endofffmpeg .= ' -progress /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.stats';
     if ($trans) {
         $ffmpeg .= ' -y -thread_queue_size 512 -loglevel error -fflags nobuffer -flags low_delay -fflags +genpts -strict experimental -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 2 -err_detect ignore_err';
-        $ffmpeg .= ' -progress /opt/streamtool/app/www/' . $setting->hlsfolder . '/' . $stream->id . '_.stats';
         $ffmpeg .= ' -probesize ' . ($trans->probesize ? $trans->probesize : '1000000');
         $ffmpeg .= ' -analyzeduration ' . ($trans->analyzeduration ? $trans->analyzeduration : '1000000');
         $ffmpeg .= ' -user_agent "' . ($setting->user_agent ? $setting->user_agent : 'Streamtool') . '"';
