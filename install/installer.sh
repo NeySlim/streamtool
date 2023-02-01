@@ -85,7 +85,7 @@ PID=$!
 spinner $PID "Removing unnecessary packages"
 
 
-pkglist="sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 nvidia-compute-utils-460 libnvidia-decode-460 libnvidia-encode-460 nvidia-utils-460"
+pkglist="sudo curl nano wget zip bzip2 unzip git lsof libfdk-aac1 libcrystalhd3 iftop htop ca-certificates net-tools xml-twig-tools libgeoip1 libqdbm14 libxdmcp6 libxml2 libxslt1.1 libxpm4 libcurl4 libmhash2 libpcre3 libpopt0 libpq5 libsensors-config libsm6 libpng16-16 libfreetype6 libc6 zlib1g libxau6 libxcb1 libssh2-1 libgd3 libtidy5deb1 libonig5 libnppig10 libnppicc10 libnppidei10 nvidia-compute-utils-460 libnvidia-decode-460 libnvidia-encode-460 nvidia-utils-460 libvdpau1 libva-drm2 libsoxr0 libx264-155 libx265-179 libxvidcore4 libvorbis0a libvorbisenc2 libtheora0 libspeex1 libmp3lame0 libgsm1 libvpx6 libass9 libpulse0 libopenal1"
 for pkgname in $pkglist; do
   {
       apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --allow-downgrades  --allow-unauthenticated -y $pkgname  >/dev/null 2>&1 &
