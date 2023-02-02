@@ -18,8 +18,8 @@ A web software for managing and manipulating video streams.
 - IP filter manager
 - Resources monitor
 - Remove nvidia encoder limit on demand
-... and more to come
- 
+
+
 ## Installation
  **SUPPORTED DISTRIBUTION : Ubuntu 20.04 64 BIT**
   As administrator execute:
