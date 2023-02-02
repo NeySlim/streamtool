@@ -17,7 +17,7 @@ A web software for managing and manipulating video streams.
 - User Agent manager
 - IP filter manager
 - Resources monitor
-- Remove nvidia encoder limit on demand
+- Patch nvidia encoder limit for consumer cards on demand
 
 
 ## Installation
@@ -32,6 +32,7 @@ wget https://bitbucket.org/le_lio/streamtool/raw/master/streamtool.tar.gz && tar
 
 ## How does it work ?
 - Default login: admin / admin
+  - Setup settings in left panel
   - Add a category to allow user and stream creation
   - Add a stream or import a playlist
   - Add a user
