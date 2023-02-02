@@ -26,10 +26,10 @@ A web software for managing and manipulating video streams.
 ```
 wget https://bitbucket.org/le_lio/streamtool/raw/master/streamtool.tar.gz && tar xvzf streamtool.tar.gz && bash st-install.sh
 ```
-  Visit : http://streamtool-adress:9001/ login with 
+  Visit : http://streamtool-adress:9001/ login with :
+  
     Username : admin 
     Password : admin
-
 
 ## How does it work ?
 - Default login: admin / admin
