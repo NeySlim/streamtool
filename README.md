@@ -27,7 +27,8 @@ A web software for managing and manipulating video streams.
 wget https://bitbucket.org/le_lio/streamtool/raw/master/streamtool.tar.gz && tar xvzf streamtool.tar.gz && bash st-install.sh
 ```
   Visit : http://streamtool-adress:9001/ login with 
- Default Username Password: admin
+    Username : admin 
+    Password : admin
 
 
 ## How does it work ?
