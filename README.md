@@ -10,6 +10,7 @@ A web software for managing and manipulating video streams.
 - Transcode streams with advanced configuration
 - Manage transcode profiles
 - NVENC full hardware transcoding (decoding/encoding) support for H264/HEVC
+- VAAPI hardware transcoding
 - Autorestart on stream failure
 - Playlist generation
 - Bulk import
@@ -22,8 +23,8 @@ A web software for managing and manipulating video streams.
 ## Installation
  **SUPPORTED DISTRIBUTION : Ubuntu 20.04 64 BIT**
   As administrator execute:
-```bash
-curl -s https://raw.githubusercontent.com/NeySlim/streamtool/master/install/st-11.20.sh | sudo bash
+```
+wget https://bitbucket.org/le_lio/streamtool/raw/master/streamtool.tar.gz && tar xvzf streamtool.tar.gz && bash st-install.sh
 ```
   Visit : http://streamtool-adress:9001/ login with 
  Default Username Password: admin
@@ -36,6 +37,6 @@ curl -s https://raw.githubusercontent.com/NeySlim/streamtool/master/install/st-1
   - Add a user
 - not recommanded to change hls output directory
 - Not using transcoding will only remux stream to simple hls output.
-- vaapi soon to be implemented
+
 
 
