@@ -457,6 +457,16 @@
                 label: "llhp"
             }
         ];
+		var presetValues5 = [{
+                id: "",
+                label: "-"
+            }
+        ];
+		var presetValues6 = [{
+                id: "",
+                label: "-"
+            }
+        ];
         var profileValues3 = [{
                 id: "baseline -level 3.0",
                 label: "baseline -level 3.0"
@@ -483,7 +493,32 @@
                 label: "rext -level auto"
             }
         ];
-
+		var profileValues5 = [{
+                id: "constrained_baseline -level 3.0",
+                label: "constrained_baseline -level 3.0"
+            },
+            {
+                id: "main -level 4.0",
+                label: "main -level 4.0"
+            },
+            {
+                id: "high -level 4.2",
+                label: "high -level 4.2"
+            }
+        ];
+		var profileValues6 = [{
+                id: "main -level 4.1",
+                label: "main -level 4.1"
+            },
+            {
+                id: "main10 -level 5",
+                label: "main10 -level 5"
+            },
+            {
+                id: "rext -level 5",
+                label: "rext -level 5"
+            }
+        ];
 
         var codecs = {
             "": {
@@ -497,12 +532,12 @@
                 profileValues: profileValues1
             },
             "h264": {
-                label: "H.264",
+                label: "H264",
                 presetValues: presetValues2,
                 profileValues: profileValues2
             },
             "libx265": {
-                label: "H265",
+                label: "HEVC",
                 presetValues: presetValues2,
                 profileValues: profileValues2
             },
@@ -515,7 +550,17 @@
                 label: "Nvidia HEVC nvenc",
                 presetValues: presetValues4,
                 profileValues: profileValues4
-            }
+            },
+			"h264_vaapi": {
+                label: "VAAPI H264",
+                presetValues: presetValues5,
+                profileValues: profileValues5
+            },
+			"hevc_vaapi": {
+                label: "VAAPI HEVC",
+                presetValues: presetValues6,
+                profileValues: profileValues6
+            },
         };
         var codec_default_value = "{{  isset($_POST['video_codec']) ?  $_POST['video_codec']  : ( empty($transcode->video_codec) ? 'copy' : $transcode->video_codec ) }}";
         var preset_default_value = "{{ isset($_POST['preset_values']) ?  $_POST['preset_values'] : ( empty($transcode->preset_values) ? 'veryfast' : $transcode->preset_values) }}"; 
